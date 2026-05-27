@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iara Forstreuter - Multidisciplinary Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #000;
+    background-color: #fff;
+    line-height: 1.6;
+  }
+  
+  .hero {
+    padding: clamp(60px, 10vw, 120px) 0 clamp(50px, 8vw, 100px);
+    position: relative;
+    overflow: hidden;
+    background: #1a1a1a;
+    min-height: 500px;
+  }
+  
+  #hero-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  
+  .hero .wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 40px);
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #fff;
+    line-height: 1.2;
+  }
+  
+  .hero p {
+    font-size: clamp(16px, 2vw, 20px);
+    color: #ccc;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-align: center;
+  }
+  
+  .portfolio {
+    padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 40px);
+  }
+  
+  .alt {
+    background: linear-gradient(-45deg, rgba(255,179,71,0.25), rgba(255,107,107,0.2), rgba(147,197,253,0.2), rgba(167,243,208,0.25), rgba(253,224,71,0.22));
+    background-size: 500% 500%;
+    animation: gradient-shift 18s ease-in-out infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 0%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    margin-bottom: 2rem;
+    color: #000;
+  }
+  
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .project-card {
+    border: 2px solid #2a2a2a;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border-radius: 12px;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 240px;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    border-bottom: 2px solid #2a2a2a;
+  }
+  
+  .project-content {
+    padding: 1.5rem;
+  }
+  
+  .project-content h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+    color: #000;
+  }
+  
+  .project-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+  
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #fff;
+    border: 1px solid #2a2a2a;
+    font-size: 12px;
+    color: #000;
+    border-radius: 6px;
+  }
+  
+  .contact {
+    background: #000;
+    color: #fff;
+    padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 40px);
+    text-align: center;
+  }
+  
+  .contact h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+  
+  .contact-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 12px 32px;
+    border: 2px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  
+  .contact-link:hover {
+    background: #fff;
+    color: #000;
+  }
+  
+  footer {
+    background: #000;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    z-index: 100;
+  }
+  
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    opacity: 0.6;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-sticky">
+  <div class="nav-brand">Iara Forstreuter</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero-section">
+  <svg id="hero-svg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ff4757;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ffa500;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-yellow" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ffb700;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#52c41a;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#389e0d;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#13c2c2;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0a8080;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#9254de;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#722ed1;stop-opacity:0.9" />
+      </linearGradient>
+    </defs>
+    <g id="connections" />
+    <g id="nodes" />
+  </svg>
+  
+  <div class="wrap">
+    <h1>Iara Forstreuter</h1>
+    <p>I'm a multidisciplinary designer based in Berlin who loves to engage in creative processes. I am interested in sustainable methodologies and in finding systemic design solutions.</p>
+  </div>
+</section>
+
+<section class="portfolio alt" id="work">
+  <div class="wrap">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="portfolio-grid">
+      <div class="project-card">
+        <div class="project-image">🎓</div>
+        <div class="project-content">
+          <h3>Master Thesis</h3>
+          <p>Ancestral Wisdom & Sustainable Practices - System Design Research</p>
+          <div class="project-tags">
+            <span class="tag">System Design</span>
+            <span class="tag">Research</span>
+            <span class="tag">Sustainability</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🌍</div>
+        <div class="project-content">
+          <h3>betterplace.org</h3>
+          <p>UX/UI Redesign - Germany's largest non-profit fundraising platform</p>
+          <div class="project-tags">
+            <span class="tag">UX/UI</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Design System</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🍽️</div>
+        <div class="project-content">
+          <h3>Food & Culture</h3>
+          <p>System Design & Gigamap - Exploring cultural food systems</p>
+          <div class="project-tags">
+            <span class="tag">System Map</span>
+            <span class="tag">Cultural Design</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🛠️</div>
+        <div class="project-content">
+          <h3>Leibniz Packaging</h3>
+          <p>Industrial Design - Sustainable packaging solutions</p>
+          <div class="project-tags">
+            <span class="tag">Industrial Design</span>
+            <span class="tag">Sustainability</span>
+            <span class="tag">Rhinoceros</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🍄</div>
+        <div class="project-content">
+          <h3>Fungi & Mycelium</h3>
+          <p>Material Research - Exploring biological materials</p>
+          <div class="project-tags">
+            <span class="tag">Material</span>
+            <span class="tag">Research</span>
+            <span class="tag">Biology</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🎨</div>
+        <div class="project-content">
+          <h3>Visual Arts</h3>
+          <p>Illustration, Painting & Graphic Design</p>
+          <div class="project-tags">
+            <span class="tag">Illustration</span>
+            <span class="tag">Art</span>
+            <span class="tag">Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Get in Touch</h2>
+    <p style="margin: 1rem 0; font-size: 18px; font-weight: 300;">Currently seeking new opportunities</p>
+    <a href="mailto:hello@iaraforstreuter.com" class="contact-link">Contact Me</a>
+    <p style="margin-top: 2rem; font-size: 14px;">
+      <a href="https://linkedin.com" style="color: #fff; text-decoration: underline;">LinkedIn</a> • 
+      <a href="https://instagram.com" style="color: #fff; text-decoration: underline;">Instagram</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 Iara Forstreuter. All rights reserved.</p>
+</footer>
+
+<script>
+function initHeroNetwork() {
+  const svg = document.getElementById('hero-svg');
+  if (!svg) {
+    console.error('SVG not found');
+    return;
+  }
+
+  const allColors = ['#ff6b6b', '#ff5252', '#ff7f7f', '#13c2c2', '#26a69a', '#4db8ac', '#00bcd4', '#9254de', '#ab47bc', '#ba68c8', '#ce93d8'];
+  
+  const nodes = [
+    // Center and main clusters
+    { x: 500, y: 200, r: 22, cat: 'gov' },
+    { x: 380, y: 320, r: 16, cat: 'gov' },
+    { x: 580, y: 300, r: 18, cat: 'gov' },
+    { x: 420, y: 450, r: 14, cat: 'gov' },
+    { x: 580, y: 480, r: 15, cat: 'gov' },
+    { x: 500, y: 600, r: 12, cat: 'gov' },
+    { x: 340, y: 380, r: 11, cat: 'gov' },
+    { x: 620, y: 380, r: 13, cat: 'gov' },
+    { x: 460, y: 280, r: 10, cat: 'gov' },
+    
+    { x: 700, y: 80, r: 18, cat: 'eco' },
+    { x: 600, y: 120, r: 14, cat: 'eco' },
+    { x: 800, y: 100, r: 15, cat: 'eco' },
+    { x: 720, y: 160, r: 12, cat: 'eco' },
+    { x: 650, y: 180, r: 11, cat: 'eco' },
+    
+    { x: 150, y: 200, r: 20, cat: 'prod' },
+    { x: 80, y: 340, r: 15, cat: 'prod' },
+    { x: 200, y: 380, r: 14, cat: 'prod' },
+    { x: 120, y: 520, r: 13, cat: 'prod' },
+    { x: 220, y: 580, r: 12, cat: 'prod' },
+    { x: 100, y: 240, r: 11, cat: 'prod' },
+    { x: 180, y: 450, r: 10, cat: 'prod' },
+    { x: 260, y: 320, r: 9, cat: 'prod' },
+    
+    { x: 950, y: 250, r: 21, cat: 'bio' },
+    { x: 1080, y: 350, r: 16, cat: 'bio' },
+    { x: 880, y: 420, r: 15, cat: 'bio' },
+    { x: 1020, y: 500, r: 14, cat: 'bio' },
+    { x: 1100, y: 580, r: 13, cat: 'bio' },
+    { x: 950, y: 620, r: 12, cat: 'bio' },
+    { x: 1000, y: 320, r: 12, cat: 'bio' },
+    { x: 1120, y: 450, r: 11, cat: 'bio' },
+    { x: 820, y: 520, r: 10, cat: 'bio' },
+    
+    { x: 1200, y: 150, r: 17, cat: 'act' },
+    { x: 1280, y: 280, r: 14, cat: 'act' },
+    { x: 1150, y: 320, r: 13, cat: 'act' },
+    { x: 1250, y: 200, r: 11, cat: 'act' },
+    { x: 1310, y: 380, r: 10, cat: 'act' },
+    
+    { x: 700, y: 400, r: 19, cat: 'com' },
+    { x: 750, y: 520, r: 15, cat: 'com' },
+    { x: 630, y: 520, r: 14, cat: 'com' },
+    { x: 680, y: 300, r: 13, cat: 'com' },
+    { x: 780, y: 380, r: 11, cat: 'com' },
+    
+    // Fill edges and corners
+    { x: 50, y: 100, r: 12, cat: 'prod' },
+    { x: 1350, y: 100, r: 13, cat: 'act' },
+    { x: 1300, y: 650, r: 11, cat: 'bio' },
+    { x: 50, y: 650, r: 12, cat: 'gov' },
+    { x: 300, y: 100, r: 10, cat: 'eco' },
+    { x: 900, y: 100, r: 11, cat: 'com' },
+    { x: 1100, y: 100, r: 9, cat: 'prod' },
+    { x: 200, y: 650, r: 10, cat: 'eco' },
+    { x: 400, y: 650, r: 12, cat: 'act' },
+    { x: 800, y: 100, r: 14, cat: 'gov' },
+    { x: 50, y: 350, r: 13, cat: 'bio' },
+    { x: 1350, y: 350, r: 11, cat: 'eco' },
+    { x: 1350, y: 550, r: 12, cat: 'gov' },
+    { x: 300, y: 650, r: 10, cat: 'com' },
+    
+    // More dense fill across entire canvas
+    { x: 200, y: 100, r: 8, cat: 'mix' },
+    { x: 400, y: 150, r: 10, cat: 'mix' },
+    { x: 1200, y: 80, r: 9, cat: 'mix' },
+    { x: 100, y: 450, r: 11, cat: 'mix' },
+    { x: 250, y: 550, r: 9, cat: 'mix' },
+    { x: 1100, y: 200, r: 10, cat: 'mix' },
+    { x: 550, y: 100, r: 8, cat: 'mix' },
+    { x: 350, y: 520, r: 9, cat: 'mix' },
+    { x: 1250, y: 450, r: 11, cat: 'mix' },
+    { x: 1050, y: 650, r: 8, cat: 'mix' },
+    { x: 600, y: 650, r: 10, cat: 'mix' },
+    { x: 150, y: 580, r: 9, cat: 'mix' },
+    { x: 900, y: 550, r: 10, cat: 'mix' },
+    { x: 750, y: 100, r: 9, cat: 'mix' },
+    { x: 1150, y: 600, r: 8, cat: 'mix' },
+    { x: 450, y: 350, r: 9, cat: 'mix' },
+    { x: 1000, y: 100, r: 10, cat: 'mix' },
+    { x: 100, y: 600, r: 11, cat: 'mix' },
+    { x: 300, y: 280, r: 8, cat: 'mix' },
+    { x: 1300, y: 200, r: 9, cat: 'mix' },
+    { x: 650, y: 250, r: 8, cat: 'mix' },
+    { x: 350, y: 100, r: 9, cat: 'mix' },
+    { x: 950, y: 100, r: 10, cat: 'mix' },
+    { x: 1320, y: 480, r: 8, cat: 'mix' },
+    { x: 80, y: 180, r: 9, cat: 'mix' },
+    { x: 500, y: 50, r: 7, cat: 'mix' },
+    { x: 1350, y: 680, r: 8, cat: 'mix' },
+    { x: 400, y: 600, r: 10, cat: 'mix' },
+    { x: 850, y: 100, r: 9, cat: 'mix' },
+    { x: 200, y: 400, r: 8, cat: 'mix' },
+    { x: 1150, y: 350, r: 9, cat: 'mix' },
+    { x: 550, y: 400, r: 8, cat: 'mix' },
+    { x: 50, y: 250, r: 10, cat: 'mix' },
+    { x: 1280, y: 580, r: 7, cat: 'mix' },
+    { x: 700, y: 50, r: 8, cat: 'mix' },
+    { x: 170, y: 680, r: 9, cat: 'mix' },
+    { x: 900, y: 200, r: 8, cat: 'mix' },
+    { x: 450, y: 600, r: 10, cat: 'mix' },
+    { x: 800, y: 450, r: 9, cat: 'mix' },
+    { x: 1100, y: 680, r: 8, cat: 'mix' },
+    // Lighter grid fill - complete coverage
+    { x: 75, y: 75, r: 7, cat: 'mix' },
+    { x: 275, y: 75, r: 7, cat: 'mix' },
+    { x: 475, y: 75, r: 7, cat: 'mix' },
+    { x: 675, y: 75, r: 7, cat: 'mix' },
+    { x: 875, y: 75, r: 7, cat: 'mix' },
+    { x: 1075, y: 75, r: 7, cat: 'mix' },
+    { x: 1275, y: 75, r: 7, cat: 'mix' },
+    
+    { x: 75, y: 175, r: 8, cat: 'mix' },
+    { x: 275, y: 175, r: 8, cat: 'mix' },
+    { x: 475, y: 175, r: 8, cat: 'mix' },
+    { x: 675, y: 175, r: 8, cat: 'mix' },
+    { x: 875, y: 175, r: 8, cat: 'mix' },
+    { x: 1075, y: 175, r: 8, cat: 'mix' },
+    { x: 1275, y: 175, r: 8, cat: 'mix' },
+    
+    { x: 75, y: 275, r: 7, cat: 'mix' },
+    { x: 275, y: 275, r: 7, cat: 'mix' },
+    { x: 475, y: 275, r: 7, cat: 'mix' },
+    { x: 675, y: 275, r: 7, cat: 'mix' },
+    { x: 875, y: 275, r: 7, cat: 'mix' },
+    { x: 1075, y: 275, r: 7, cat: 'mix' },
+    { x: 1275, y: 275, r: 7, cat: 'mix' },
+    
+    { x: 75, y: 375, r: 8, cat: 'mix' },
+    { x: 275, y: 375, r: 8, cat: 'mix' },
+    { x: 475, y: 375, r: 8, cat: 'mix' },
+    { x: 675, y: 375, r: 8, cat: 'mix' },
+    { x: 875, y: 375, r: 8, cat: 'mix' },
+    { x: 1075, y: 375, r: 8, cat: 'mix' },
+    { x: 1275, y: 375, r: 8, cat: 'mix' },
+    
+    { x: 75, y: 475, r: 7, cat: 'mix' },
+    { x: 275, y: 475, r: 7, cat: 'mix' },
+    { x: 475, y: 475, r: 7, cat: 'mix' },
+    { x: 675, y: 475, r: 7, cat: 'mix' },
+    { x: 875, y: 475, r: 7, cat: 'mix' },
+    { x: 1075, y: 475, r: 7, cat: 'mix' },
+    { x: 1275, y: 475, r: 7, cat: 'mix' },
+    
+    { x: 75, y: 575, r: 8, cat: 'mix' },
+    { x: 275, y: 575, r: 8, cat: 'mix' },
+    { x: 475, y: 575, r: 8, cat: 'mix' },
+    { x: 675, y: 575, r: 8, cat: 'mix' },
+    { x: 875, y: 575, r: 8, cat: 'mix' },
+    { x: 1075, y: 575, r: 8, cat: 'mix' },
+    { x: 1275, y: 575, r: 8, cat: 'mix' },
+    
+    { x: 75, y: 675, r: 7, cat: 'mix' },
+    { x: 275, y: 675, r: 7, cat: 'mix' },
+    { x: 475, y: 675, r: 7, cat: 'mix' },
+    { x: 675, y: 675, r: 7, cat: 'mix' },
+    { x: 875, y: 675, r: 7, cat: 'mix' },
+    { x: 1075, y: 675, r: 7, cat: 'mix' },
+    { x: 1275, y: 675, r: 7, cat: 'mix' },
+    
+    // Extended network - far right edge
+    { x: 1330, y: 100, r: 10, cat: 'act' },
+    { x: 1330, y: 200, r: 9, cat: 'mix' },
+    { x: 1330, y: 300, r: 10, cat: 'mix' },
+    { x: 1330, y: 400, r: 9, cat: 'mix' },
+    { x: 1330, y: 500, r: 10, cat: 'mix' },
+    { x: 1330, y: 600, r: 9, cat: 'mix' },
+    
+    // Extended network - far left edge
+    { x: 40, y: 100, r: 10, cat: 'prod' },
+    { x: 40, y: 200, r: 9, cat: 'mix' },
+    { x: 40, y: 300, r: 10, cat: 'mix' },
+    { x: 40, y: 400, r: 9, cat: 'mix' },
+    { x: 40, y: 500, r: 10, cat: 'mix' },
+    { x: 40, y: 600, r: 9, cat: 'mix' },
+    
+    // Extended top edge
+    { x: 150, y: 20, r: 9, cat: 'mix' },
+    { x: 350, y: 20, r: 10, cat: 'mix' },
+    { x: 550, y: 20, r: 9, cat: 'mix' },
+    { x: 750, y: 20, r: 10, cat: 'mix' },
+    { x: 950, y: 20, r: 9, cat: 'mix' },
+    { x: 1150, y: 20, r: 10, cat: 'mix' },
+    { x: 1300, y: 20, r: 9, cat: 'mix' },
+    
+    // Extended bottom edge
+    { x: 150, y: 680, r: 9, cat: 'mix' },
+    { x: 350, y: 680, r: 10, cat: 'mix' },
+    { x: 550, y: 680, r: 9, cat: 'mix' },
+    { x: 750, y: 680, r: 10, cat: 'mix' },
+    { x: 950, y: 680, r: 9, cat: 'mix' },
+    { x: 1150, y: 680, r: 10, cat: 'mix' },
+    { x: 1300, y: 680, r: 9, cat: 'mix' },
+  ];
+  
+  // Assign random colors to all nodes
+  nodes.forEach(node => {
+    node.color = allColors[Math.floor(Math.random() * allColors.length)];
+    // Add drifting to some random nodes (50% chance instead of 30%)
+    if (Math.random() > 0.5) {
+      node.driftAmount = Math.random() * 20 + 15;
+      node.driftPhase = Math.random() * Math.PI * 2;
+      node.driftSpeed = Math.random() * 0.015 + 0.008;
+    }
+  });
+
+  const origPos = nodes.map(n => ({...n}));
+  const connGroup = document.getElementById('connections');
+  const nodesGroup = document.getElementById('nodes');
+
+  // Draw nodes
+  nodes.forEach((node, i) => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', node.x);
+    circle.setAttribute('cy', node.y);
+    circle.setAttribute('r', node.r);
+    circle.setAttribute('fill', node.color);
+    circle.setAttribute('opacity', '0.12');
+    circle.dataset.idx = i;
+    nodesGroup.appendChild(circle);
+  });
+
+  // Create light blue background drifting dots
+  const backgroundDots = [];
+  for (let i = 0; i < 35; i++) {
+    backgroundDots.push({
+      x: Math.random() * 1400,
+      y: Math.random() * 700,
+      r: Math.random() * 8 + 4,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.01 + 0.005
+    });
+  }
+
+  // Draw background dots in a separate group (behind the main network)
+  const bgDotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  bgDotsGroup.setAttribute('id', 'bg-dots');
+  const heroSvg = document.getElementById('hero-svg');
+  heroSvg.insertBefore(bgDotsGroup, heroSvg.firstChild);
+
+  backgroundDots.forEach((dot, idx) => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', dot.x);
+    circle.setAttribute('cy', dot.y);
+    circle.setAttribute('r', dot.r);
+    circle.setAttribute('fill', '#87ceeb');
+    circle.setAttribute('opacity', '0.25');
+    circle.dataset.bgIdx = idx;
+    bgDotsGroup.appendChild(circle);
+  });
+
+  // Draw connections - reduced connections
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      let shouldConnect = false;
+      let lineColor = '#9254de';
+      
+      if (nodes[i].cat === nodes[j].cat && dist < 180) {
+        shouldConnect = true;
+        // Randomly choose between blue and purple
+        lineColor = Math.random() > 0.5 ? '#13c2c2' : '#9254de';
+      } else if (nodes[i].cat !== nodes[j].cat && dist < 140 && Math.random() > 0.92) {
+        shouldConnect = true;
+        // Cross-category connections also blue or purple
+        lineColor = Math.random() > 0.5 ? '#4db8ac' : '#ba68c8';
+      }
+      
+      if (shouldConnect) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', nodes[i].x);
+        line.setAttribute('y1', nodes[i].y);
+        line.setAttribute('x2', nodes[j].x);
+        line.setAttribute('y2', nodes[j].y);
+        line.setAttribute('stroke', lineColor);
+        line.setAttribute('stroke-width', '2.5');
+        line.setAttribute('opacity', '0.08');
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('stroke-linejoin', 'round');
+        line.dataset.from = i;
+        line.dataset.to = j;
+        connGroup.appendChild(line);
+      }
+    }
+  }
+
+  // Mouse interaction
+  const hero = document.getElementById('hero-section');
+  let animationTime = 0;
+  const affectedByMouse = new Set();
+  
+  // Animation loop for drifting - simplified and more robust
+  function animateDrift() {
+    animationTime += 0.016;
+    const circles = nodesGroup.querySelectorAll('circle');
+    
+    circles.forEach((circle, idx) => {
+      const node = nodes[idx];
+      // Apply drift if node has drift properties and is not being pushed by mouse
+      if (node.driftAmount !== undefined && !affectedByMouse.has(idx)) {
+        const driftX = Math.sin(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
+        const driftY = Math.cos(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
+        const newX = node.x + driftX;
+        const newY = node.y + driftY;
+        circle.setAttribute('cx', newX);
+        circle.setAttribute('cy', newY);
+      }
+    });
+    
+    // Animate background dots
+    const bgCircles = bgDotsGroup.querySelectorAll('circle');
+    bgCircles.forEach((circle, idx) => {
+      const dot = backgroundDots[idx];
+      
+      // Random walk with boundaries
+      dot.x += dot.vx;
+      dot.y += dot.vy;
+      
+      // Bounce off edges
+      if (dot.x - dot.r < 0 || dot.x + dot.r > 1400) dot.vx *= -1;
+      if (dot.y - dot.r < 0 || dot.y + dot.r > 700) dot.vy *= -1;
+      
+      // Keep in bounds
+      dot.x = Math.max(dot.r, Math.min(1400 - dot.r, dot.x));
+      dot.y = Math.max(dot.r, Math.min(700 - dot.r, dot.y));
+      
+      circle.setAttribute('cx', dot.x);
+      circle.setAttribute('cy', dot.y);
+    });
+    
+    // Update connections based on current positions
+    const lines = connGroup.querySelectorAll('line');
+    lines.forEach(line => {
+      const from = parseInt(line.dataset.from);
+      const to = parseInt(line.dataset.to);
+      const c1 = circles[from];
+      const c2 = circles[to];
+      if (c1 && c2) {
+        const x1 = c1.getAttribute('cx');
+        const y1 = c1.getAttribute('cy');
+        const x2 = c2.getAttribute('cx');
+        const y2 = c2.getAttribute('cy');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+      }
+    });
+    
+    requestAnimationFrame(animateDrift);
+  }
+  
+  // Start the animation
+  animateDrift();
+  
+  document.addEventListener('mousemove', (e) => {
+    const rect = hero.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    
+    if (mx < 0 || mx > rect.width || my < 0 || my > rect.height) return;
+
+    affectedByMouse.clear();
+    const circles = nodesGroup.querySelectorAll('circle');
+    circles.forEach(circle => {
+      const idx = parseInt(circle.dataset.idx);
+      const n = nodes[idx];
+      const dx = mx - n.x;
+      const dy = my - n.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      
+      if (d < 150) {
+        affectedByMouse.add(idx);
+        const angle = Math.atan2(dy, dx);
+        const force = (1 - d / 150) * 25;
+        circle.setAttribute('cx', n.x - Math.cos(angle) * force);
+        circle.setAttribute('cy', n.y - Math.sin(angle) * force);
+      }
+    });
+
+    const lines = connGroup.querySelectorAll('line');
+    lines.forEach(line => {
+      const from = parseInt(line.dataset.from);
+      const to = parseInt(line.dataset.to);
+      const c1 = nodesGroup.querySelectorAll('circle')[from];
+      const c2 = nodesGroup.querySelectorAll('circle')[to];
+      line.setAttribute('x1', c1.getAttribute('cx'));
+      line.setAttribute('y1', c1.getAttribute('cy'));
+      line.setAttribute('x2', c2.getAttribute('cx'));
+      line.setAttribute('y2', c2.getAttribute('cy'));
+    });
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    affectedByMouse.clear();
+    const circles = nodesGroup.querySelectorAll('circle');
+    circles.forEach((c, i) => {
+      c.setAttribute('cx', origPos[i].x);
+      c.setAttribute('cy', origPos[i].y);
+    });
+    
+    const lines = connGroup.querySelectorAll('line');
+    lines.forEach(line => {
+      const from = parseInt(line.dataset.from);
+      const to = parseInt(line.dataset.to);
+      line.setAttribute('x1', origPos[from].x);
+      line.setAttribute('y1', origPos[from].y);
+      line.setAttribute('x2', origPos[to].x);
+      line.setAttribute('y2', origPos[to].y);
+    });
+  });
+}
+
+// Run when ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHeroNetwork);
+} else {
+  initHeroNetwork();
+}
+</script>
+
+</body>
+</html>
