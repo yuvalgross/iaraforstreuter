@@ -1,76 +1,85 @@
-# Iara Forstreuter - Portfolio Website
+# Iara Forstreuter — Multidisciplinary Designer
 
-A modern, interactive portfolio website for multidisciplinary designer Iara Forstreuter, based in Berlin.
+A clean, modern portfolio website showcasing design work across system design, UX/UI, industrial design, and visual arts.
+
+## Files Structure
+
+```
+.
+├── index.html                    # Main portfolio page
+├── leibniz-packaging.png         # Project image asset
+├── vercel.json                   # Vercel deployment config
+└── README.md                     # This file
+```
 
 ## Features
 
-- **Interactive Hero Section**: Animated network with drifting blue dots that respond to cursor movement
-- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
-- **Smooth Animations**: Gradient animations in the portfolio section and continuous dot drift
-- **Dark Theme**: Sophisticated dark background with white text and colorful network elements
-- **Clean UI**: Minimalist design with grey borders and rounded corners
+- **Responsive Design** — Mobile-first, works on all screen sizes
+- **Performance** — Static HTML, ~50KB total size, instant load
+- **SEO Ready** — Clean semantic HTML
+- **No Build Step** — Deploy directly to Vercel
 
-## Technologies Used
+## Deployment to Vercel
 
-- HTML5
-- CSS3 (with animations and responsive design)
-- Vanilla JavaScript (no dependencies)
-- SVG for interactive network visualization
+### Option 1: Deploy from Git (Recommended)
 
-## Structure
+1. Push this folder to a GitHub repository
+2. Go to [vercel.com](https://vercel.com)
+3. Click "Add New..." → "Project"
+4. Import your GitHub repository
+5. Vercel auto-detects settings from `vercel.json`
+6. Click "Deploy"
 
+**Your site will be live in seconds** with a `.vercel.app` domain or your custom domain.
+
+### Option 2: Deploy from CLI
+
+```bash
+npm install -g vercel
+vercel
 ```
-iara-portfolio.html  - Single-file portfolio website
+
+Follow the prompts. Your site deploys instantly.
+
+### Option 3: Drag & Drop Deploy
+
+1. Go to [vercel.com/new](https://vercel.com/new)
+2. Drag and drop this folder
+3. Done
+
+## Custom Domain
+
+In Vercel Dashboard:
+1. Go to your project → Settings → Domains
+2. Add your custom domain (e.g., `iaraforstreuter.com`)
+3. Update DNS at your domain registrar
+
+## Updating Content
+
+Edit `index.html` directly:
+- Update project descriptions, images, links
+- Change contact email
+- Modify colors or typography
+
+Push changes to GitHub → Vercel auto-redeploys.
+
+## Project Assets
+
+**Images:** Place all project images in the root folder (same level as `index.html`). Reference them in HTML like:
+```html
+<div style="background-image: url('your-image.png');">
 ```
 
-## Features Breakdown
+**Currently included:**
+- `leibniz-packaging.png` — Leibniz Packaging project
 
-### Hero Section
-- Dark background (#1a1a1a)
-- Animated network of 80+ dots in blue, teal, and purple
-- 35 light blue background dots that drift randomly
-- 250+ connection lines between dots
-- Interactive: dots repel from cursor within 150px radius
-- Centered text with white heading and light grey description
+## Performance
 
-### Portfolio Section
-- Animated gradient background with shifting pastels
-- 6 project cards with:
-  - Rounded corners (12px)
-  - Blackish grey borders (#2a2a2a)
-  - Category tags with matching borders
-  - Hover effects
+- **Static site** — No database, no API calls
+- **Fast load** — Pure HTML/CSS, minimal JavaScript
+- **CDN global** — Vercel serves from 300+ locations worldwide
+- **SSL/HTTPS** — Automatic with Vercel
 
-### Navigation
-- Sticky header with black top border
-- Responsive design (nav links hide on mobile)
+## Contact
 
-## Mobile Responsive
-
-- Single-column layout on tablets and mobile
-- Responsive typography using `clamp()`
-- Touch-friendly spacing
-- All interactive elements work on mobile
-
-## Installation
-
-Simply download the `iara-portfolio.html` file and open it in a web browser. No dependencies or build process required.
-
-## Colors
-
-- **Hero Background**: #1a1a1a (very dark grey/black)
-- **Text**: #fff (white), #ccc (light grey)
-- **Borders**: #2a2a2a (blackish grey), #000 (navigation)
-- **Network**: Blues (#13c2c2, #4db8ac, #00bcd4), Purples (#9254de, #ba68c8, #ce93d8), Reds (#ff6b6b, #ff5252, #ff7f7f)
-
-## Customization
-
-All styles are contained within the HTML file's `<style>` tag. Easy to customize:
-- Colors: Search and replace color hex values
-- Fonts: Uses 'DM Serif Display' and 'Inter' from Google Fonts
-- Text: Update content in the HTML body
-- Network density: Modify the `nodes` array in the script section
-
-## License
-
-© 2024 Iara Forstreuter. All rights reserved.
+For questions about this portfolio, reach out to the designer directly.

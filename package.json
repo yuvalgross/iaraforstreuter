@@ -1,0 +1,22 @@
+{
+  "name": "iara-forstreuter-portfolio",
+  "version": "1.0.0",
+  "description": "Multidisciplinary Designer Portfolio — Berlin-based design work in system design, UX/UI, industrial design, and visual arts.",
+  "author": "Iara Forstreuter",
+  "license": "MIT",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "portfolio",
+    "designer",
+    "system-design",
+    "ux-design",
+    "industrial-design",
+    "berlin"
+  ],
+  "engines": {
+    "node": "18.x"
+  }
+}

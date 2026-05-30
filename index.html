@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iara Forstreuter - Multidisciplinary Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #000;
+    background-color: #fff;
+    line-height: 1.7;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  
+  .hero {
+    padding: clamp(80px, 15vw, 180px) clamp(20px, 5vw, 60px);
+    position: relative;
+    overflow: hidden;
+    background: #0000FF;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #hero-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  
+  .hero .wrap {
+    max-width: 700px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .hero h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(48px, 8vw, 72px);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: 1px;
+  }
+  
+  .hero p {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: #e0e0e0;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    line-height: 1.9;
+  }
+  
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: #666;
+    margin: 2rem auto;
+  }
+  
+  .portfolio {
+    padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 60px);
+    background: #fff;
+  }
+  
+  .portfolio .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .section-title {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 400;
+    margin-bottom: 3rem;
+    color: #000;
+    letter-spacing: 1px;
+  }
+  
+  .alt {
+    background: linear-gradient(-45deg, rgba(255,179,71,0.25), rgba(255,107,107,0.2), rgba(147,197,253,0.2), rgba(167,243,208,0.25), rgba(253,224,71,0.22));
+    background-size: 500% 500%;
+    animation: gradient-shift 18s ease-in-out infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 100% 50%; }
+    50% { background-position: 100% 0%; }
+    75% { background-position: 0% 100%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .project-card {
+    border: 2px solid #ccc;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .project-image {
+    width: 100%;
+    height: 280px;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .project-content {
+    padding: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .project-category {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+  }
+  
+  .project-content h3 {
+    font-family: 'EB Garamond', serif;
+    font-size: 24px;
+    margin-bottom: 1rem;
+    color: #000;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  
+  .project-content p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    line-height: 1.7;
+    flex-grow: 1;
+  }
+  
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: auto;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #fff;
+    border: 1px solid #ccc;
+    font-size: 12px;
+    color: #000;
+  }
+  
+  .contact {
+    background: #0000FF;
+    color: #fff;
+    padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 60px);
+    text-align: center;
+  }
+  
+  .contact .wrap {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .contact h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(42px, 6vw, 56px);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .contact p {
+    font-size: 18px;
+    color: #bbb;
+    margin: 1.5rem 0;
+    line-height: 1.9;
+  }
+  
+  .contact-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 14px 40px;
+    border: 1px solid #fff;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+  }
+  
+  .contact-link:hover {
+    background: #fff;
+    color: #0000FF;
+  }
+  
+  footer {
+    background: #0000FF;
+    color: #e0e0e0;
+    padding: 3rem;
+    text-align: center;
+    font-size: 14px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  .nav-sticky {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    z-index: 100;
+  }
+  
+  .nav-brand {
+    font-family: 'EB Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: 1px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    opacity: 0.6;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-sticky">
+  <div class="nav-brand">Iara Forstreuter</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="hero-section">
+  <svg id="hero-svg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#ff4757;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#13c2c2;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#0a8080;stop-opacity:0.9" />
+      </linearGradient>
+      <linearGradient id="grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#9254de;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#722ed1;stop-opacity:0.9" />
+      </linearGradient>
+    </defs>
+    <g id="connections" />
+    <g id="nodes" />
+  </svg>
+  
+  <div class="wrap">
+    <h1>Iara Forstreuter</h1>
+    <div class="divider"></div>
+    <p>A multidisciplinary designer based in Berlin, engaged in creative processes and systemic design solutions rooted in sustainable methodologies</p>
+  </div>
+</section>
+
+<section class="portfolio alt" id="work">
+  <div class="wrap">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="portfolio-grid">
+      <div class="project-card">
+        <div class="project-image">🎓</div>
+        <div class="project-content">
+          <div class="project-category">Research</div>
+          <h3>Master Thesis</h3>
+          <p>Ancestral Wisdom & Sustainable Practices — System Design Research</p>
+          <div class="project-tags">
+            <span class="tag">System Design</span>
+            <span class="tag">Research</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🌍</div>
+        <div class="project-content">
+          <div class="project-category">UX/UI Design</div>
+          <h3>betterplace.org</h3>
+          <p>UX/UI Redesign for Germany's largest non-profit fundraising platform</p>
+          <div class="project-tags">
+            <span class="tag">UX/UI</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🍽️</div>
+        <div class="project-content">
+          <div class="project-category">System Design</div>
+          <h3>Food & Culture</h3>
+          <p>System Design & Gigamap exploring cultural food systems</p>
+          <div class="project-tags">
+            <span class="tag">System Map</span>
+            <span class="tag">Cultural Design</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image" style="background: #f5f5f5; background-image: url('leibniz-packaging.png'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+        <div class="project-content">
+          <div class="project-category">Industrial Design</div>
+          <h3>Leibniz Packaging</h3>
+          <p>Industrial Design solutions for sustainable packaging</p>
+          <div class="project-tags">
+            <span class="tag">Industrial Design</span>
+            <span class="tag">Sustainability</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🍄</div>
+        <div class="project-content">
+          <div class="project-category">Material Research</div>
+          <h3>Fungi & Mycelium</h3>
+          <p>Material Research exploring biological materials</p>
+          <div class="project-tags">
+            <span class="tag">Material</span>
+            <span class="tag">Research</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">🎨</div>
+        <div class="project-content">
+          <div class="project-category">Illustration & Art</div>
+          <h3>Visual Arts</h3>
+          <p>Illustration, Painting & Graphic Design</p>
+          <div class="project-tags">
+            <span class="tag">Illustration</span>
+            <span class="tag">Art</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's collaborate</h2>
+    <p>Currently seeking new opportunities in design and systemic thinking</p>
+    <a href="mailto:hello@iaraforstreuter.com" class="contact-link">Get in Touch</a>
+    <p style="margin-top: 2rem; font-size: 16px; color: #888;">
+      <a href="https://linkedin.com" style="color: #aaa; text-decoration: none;">LinkedIn</a> • 
+      <a href="https://instagram.com" style="color: #aaa; text-decoration: none;">Instagram</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2024 Iara Forstreuter. All rights reserved.</p>
+</footer>
+
+<script>
+const allColors = ['#ff6b6b', '#ff5252', '#ff7f7f', '#13c2c2', '#26a69a', '#4db8ac', '#00bcd4', '#9254de', '#ab47bc', '#ba68c8', '#ce93d8'];
+
+const nodes = [
+  { x: 500, y: 200, r: 22, cat: 'gov' },
+  { x: 380, y: 320, r: 16, cat: 'gov' },
+  { x: 580, y: 300, r: 18, cat: 'gov' },
+  { x: 420, y: 450, r: 14, cat: 'gov' },
+  { x: 580, y: 480, r: 15, cat: 'gov' },
+  { x: 500, y: 600, r: 12, cat: 'gov' },
+  { x: 340, y: 380, r: 11, cat: 'gov' },
+  { x: 620, y: 380, r: 13, cat: 'gov' },
+  { x: 460, y: 280, r: 10, cat: 'gov' },
+  
+  { x: 700, y: 80, r: 18, cat: 'eco' },
+  { x: 600, y: 120, r: 14, cat: 'eco' },
+  { x: 800, y: 100, r: 15, cat: 'eco' },
+  { x: 720, y: 160, r: 12, cat: 'eco' },
+  { x: 650, y: 180, r: 11, cat: 'eco' },
+  
+  { x: 150, y: 200, r: 20, cat: 'prod' },
+  { x: 80, y: 340, r: 15, cat: 'prod' },
+  { x: 200, y: 380, r: 14, cat: 'prod' },
+  { x: 120, y: 520, r: 13, cat: 'prod' },
+  { x: 220, y: 580, r: 12, cat: 'prod' },
+  { x: 100, y: 240, r: 11, cat: 'prod' },
+  { x: 180, y: 450, r: 10, cat: 'prod' },
+  { x: 260, y: 320, r: 9, cat: 'prod' },
+  
+  { x: 950, y: 250, r: 21, cat: 'bio' },
+  { x: 1080, y: 350, r: 16, cat: 'bio' },
+  { x: 880, y: 420, r: 15, cat: 'bio' },
+  { x: 1020, y: 500, r: 14, cat: 'bio' },
+  { x: 1100, y: 580, r: 13, cat: 'bio' },
+  { x: 950, y: 620, r: 12, cat: 'bio' },
+  { x: 1000, y: 320, r: 12, cat: 'bio' },
+  { x: 1120, y: 450, r: 11, cat: 'bio' },
+  { x: 820, y: 520, r: 10, cat: 'bio' },
+  
+  { x: 1200, y: 150, r: 17, cat: 'act' },
+  { x: 1280, y: 280, r: 14, cat: 'act' },
+  { x: 1150, y: 320, r: 13, cat: 'act' },
+  { x: 1250, y: 200, r: 11, cat: 'act' },
+  { x: 1310, y: 380, r: 10, cat: 'act' },
+  
+  { x: 700, y: 400, r: 19, cat: 'com' },
+  { x: 750, y: 520, r: 15, cat: 'com' },
+  { x: 630, y: 520, r: 14, cat: 'com' },
+  { x: 680, y: 300, r: 13, cat: 'com' },
+  { x: 780, y: 380, r: 11, cat: 'com' },
+  
+  { x: 1330, y: 100, r: 10, cat: 'act' },
+  { x: 1330, y: 200, r: 9, cat: 'mix' },
+  { x: 1330, y: 300, r: 10, cat: 'mix' },
+  { x: 1330, y: 400, r: 9, cat: 'mix' },
+  { x: 1330, y: 500, r: 10, cat: 'mix' },
+  { x: 1330, y: 600, r: 9, cat: 'mix' },
+  
+  { x: 40, y: 100, r: 10, cat: 'prod' },
+  { x: 40, y: 200, r: 9, cat: 'mix' },
+  { x: 40, y: 300, r: 10, cat: 'mix' },
+  { x: 40, y: 400, r: 9, cat: 'mix' },
+  { x: 40, y: 500, r: 10, cat: 'mix' },
+  { x: 40, y: 600, r: 9, cat: 'mix' },
+  
+  { x: 150, y: 20, r: 9, cat: 'mix' },
+  { x: 350, y: 20, r: 10, cat: 'mix' },
+  { x: 550, y: 20, r: 9, cat: 'mix' },
+  { x: 750, y: 20, r: 10, cat: 'mix' },
+  { x: 950, y: 20, r: 9, cat: 'mix' },
+  { x: 1150, y: 20, r: 10, cat: 'mix' },
+  { x: 1300, y: 20, r: 9, cat: 'mix' },
+  
+  { x: 150, y: 680, r: 9, cat: 'mix' },
+  { x: 350, y: 680, r: 10, cat: 'mix' },
+  { x: 550, y: 680, r: 9, cat: 'mix' },
+  { x: 750, y: 680, r: 10, cat: 'mix' },
+  { x: 950, y: 680, r: 9, cat: 'mix' },
+  { x: 1150, y: 680, r: 10, cat: 'mix' },
+  { x: 1300, y: 680, r: 9, cat: 'mix' },
+
+  { x: 75, y: 75, r: 7, cat: 'mix' },
+  { x: 275, y: 75, r: 7, cat: 'mix' },
+  { x: 475, y: 75, r: 7, cat: 'mix' },
+  { x: 675, y: 75, r: 7, cat: 'mix' },
+  { x: 875, y: 75, r: 7, cat: 'mix' },
+  { x: 1075, y: 75, r: 7, cat: 'mix' },
+  { x: 1275, y: 75, r: 7, cat: 'mix' },
+  
+  { x: 75, y: 175, r: 8, cat: 'mix' },
+  { x: 275, y: 175, r: 8, cat: 'mix' },
+  { x: 475, y: 175, r: 8, cat: 'mix' },
+  { x: 675, y: 175, r: 8, cat: 'mix' },
+  { x: 875, y: 175, r: 8, cat: 'mix' },
+  { x: 1075, y: 175, r: 8, cat: 'mix' },
+  { x: 1275, y: 175, r: 8, cat: 'mix' },
+  
+  { x: 75, y: 275, r: 7, cat: 'mix' },
+  { x: 275, y: 275, r: 7, cat: 'mix' },
+  { x: 475, y: 275, r: 7, cat: 'mix' },
+  { x: 675, y: 275, r: 7, cat: 'mix' },
+  { x: 875, y: 275, r: 7, cat: 'mix' },
+  { x: 1075, y: 275, r: 7, cat: 'mix' },
+  { x: 1275, y: 275, r: 7, cat: 'mix' },
+  
+  { x: 75, y: 375, r: 8, cat: 'mix' },
+  { x: 275, y: 375, r: 8, cat: 'mix' },
+  { x: 475, y: 375, r: 8, cat: 'mix' },
+  { x: 675, y: 375, r: 8, cat: 'mix' },
+  { x: 875, y: 375, r: 8, cat: 'mix' },
+  { x: 1075, y: 375, r: 8, cat: 'mix' },
+  { x: 1275, y: 375, r: 8, cat: 'mix' },
+  
+  { x: 75, y: 475, r: 7, cat: 'mix' },
+  { x: 275, y: 475, r: 7, cat: 'mix' },
+  { x: 475, y: 475, r: 7, cat: 'mix' },
+  { x: 675, y: 475, r: 7, cat: 'mix' },
+  { x: 875, y: 475, r: 7, cat: 'mix' },
+  { x: 1075, y: 475, r: 7, cat: 'mix' },
+  { x: 1275, y: 475, r: 7, cat: 'mix' },
+  
+  { x: 75, y: 575, r: 8, cat: 'mix' },
+  { x: 275, y: 575, r: 8, cat: 'mix' },
+  { x: 475, y: 575, r: 8, cat: 'mix' },
+  { x: 675, y: 575, r: 8, cat: 'mix' },
+  { x: 875, y: 575, r: 8, cat: 'mix' },
+  { x: 1075, y: 575, r: 8, cat: 'mix' },
+  { x: 1275, y: 575, r: 8, cat: 'mix' },
+  
+  { x: 75, y: 675, r: 7, cat: 'mix' },
+  { x: 275, y: 675, r: 7, cat: 'mix' },
+  { x: 475, y: 675, r: 7, cat: 'mix' },
+  { x: 675, y: 675, r: 7, cat: 'mix' },
+  { x: 875, y: 675, r: 7, cat: 'mix' },
+  { x: 1075, y: 675, r: 7, cat: 'mix' },
+  { x: 1275, y: 675, r: 7, cat: 'mix' },
+];
+
+nodes.forEach(node => {
+  node.color = allColors[Math.floor(Math.random() * allColors.length)];
+  if (Math.random() > 0.5) {
+    node.driftAmount = Math.random() * 20 + 15;
+    node.driftPhase = Math.random() * Math.PI * 2;
+    node.driftSpeed = Math.random() * 0.015 + 0.008;
+  }
+});
+
+const origPos = nodes.map(n => ({...n}));
+const connGroup = document.getElementById('connections');
+const nodesGroup = document.getElementById('nodes');
+
+nodes.forEach((node, i) => {
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', node.x);
+  circle.setAttribute('cy', node.y);
+  circle.setAttribute('r', node.r);
+  circle.setAttribute('fill', node.color);
+  circle.setAttribute('opacity', '0.35');
+  circle.dataset.idx = i;
+  nodesGroup.appendChild(circle);
+});
+
+const backgroundDots = [];
+for (let i = 0; i < 60; i++) {
+  backgroundDots.push({
+    x: Math.random() * 1400,
+    y: Math.random() * 700,
+    r: Math.random() * 8 + 4,
+    vx: (Math.random() - 0.5) * 1.2,
+    vy: (Math.random() - 0.5) * 1.2,
+    phase: Math.random() * Math.PI * 2,
+    speed: Math.random() * 0.025 + 0.015
+  });
+}
+
+const bgDotsGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+bgDotsGroup.setAttribute('id', 'bg-dots');
+const heroSvg = document.getElementById('hero-svg');
+heroSvg.insertBefore(bgDotsGroup, heroSvg.firstChild);
+
+backgroundDots.forEach((dot, idx) => {
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', dot.x);
+  circle.setAttribute('cy', dot.y);
+  circle.setAttribute('r', dot.r);
+  circle.setAttribute('fill', '#87ceeb');
+  circle.setAttribute('opacity', '0.30');
+  circle.dataset.bgIdx = idx;
+  bgDotsGroup.appendChild(circle);
+});
+
+for (let i = 0; i < nodes.length; i++) {
+  for (let j = i + 1; j < nodes.length; j++) {
+    const dx = nodes[i].x - nodes[j].x;
+    const dy = nodes[i].y - nodes[j].y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    
+    let shouldConnect = false;
+    let lineColor = '#9254de';
+    
+    if (nodes[i].cat === nodes[j].cat && dist < 180) {
+      shouldConnect = true;
+      lineColor = Math.random() > 0.5 ? '#13c2c2' : '#9254de';
+    } else if (nodes[i].cat !== nodes[j].cat && dist < 140 && Math.random() > 0.92) {
+      shouldConnect = true;
+      lineColor = Math.random() > 0.5 ? '#4db8ac' : '#ba68c8';
+    }
+    
+    if (shouldConnect) {
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', nodes[i].x);
+      line.setAttribute('y1', nodes[i].y);
+      line.setAttribute('x2', nodes[j].x);
+      line.setAttribute('y2', nodes[j].y);
+      line.setAttribute('stroke', lineColor);
+      line.setAttribute('stroke-width', '2.5');
+      line.setAttribute('opacity', '0.15');
+      line.setAttribute('stroke-linecap', 'round');
+      line.setAttribute('stroke-linejoin', 'round');
+      line.dataset.from = i;
+      line.dataset.to = j;
+      connGroup.appendChild(line);
+    }
+  }
+}
+
+const hero = document.getElementById('hero-section');
+let animationTime = 0;
+const affectedByMouse = new Set();
+
+function animateDrift() {
+  animationTime += 0.016;
+  const circles = nodesGroup.querySelectorAll('circle');
+  
+  circles.forEach((circle, idx) => {
+    const node = nodes[idx];
+    if (node.driftAmount !== undefined && !affectedByMouse.has(idx)) {
+      const driftX = Math.sin(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
+      const driftY = Math.cos(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
+      const newX = node.x + driftX;
+      const newY = node.y + driftY;
+      circle.setAttribute('cx', newX);
+      circle.setAttribute('cy', newY);
+    }
+  });
+  
+  const bgCircles = bgDotsGroup.querySelectorAll('circle');
+  bgCircles.forEach((circle, idx) => {
+    const dot = backgroundDots[idx];
+    
+    dot.x += dot.vx;
+    dot.y += dot.vy;
+    
+    if (dot.x - dot.r < 0 || dot.x + dot.r > 1400) dot.vx *= -1;
+    if (dot.y - dot.r < 0 || dot.y + dot.r > 700) dot.vy *= -1;
+    
+    dot.x = Math.max(dot.r, Math.min(1400 - dot.r, dot.x));
+    dot.y = Math.max(dot.r, Math.min(700 - dot.r, dot.y));
+    
+    circle.setAttribute('cx', dot.x);
+    circle.setAttribute('cy', dot.y);
+  });
+  
+  const lines = connGroup.querySelectorAll('line');
+  lines.forEach(line => {
+    const from = parseInt(line.dataset.from);
+    const to = parseInt(line.dataset.to);
+    const c1 = circles[from];
+    const c2 = circles[to];
+    if (c1 && c2) {
+      const x1 = c1.getAttribute('cx');
+      const y1 = c1.getAttribute('cy');
+      const x2 = c2.getAttribute('cx');
+      const y2 = c2.getAttribute('cy');
+      line.setAttribute('x1', x1);
+      line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2);
+      line.setAttribute('y2', y2);
+    }
+  });
+  
+  requestAnimationFrame(animateDrift);
+}
+
+animateDrift();
+
+document.addEventListener('mousemove', (e) => {
+  const rect = hero.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+  
+  if (mx < 0 || mx > rect.width || my < 0 || my > rect.height) return;
+
+  affectedByMouse.clear();
+  const circles = nodesGroup.querySelectorAll('circle');
+  circles.forEach(circle => {
+    const idx = parseInt(circle.dataset.idx);
+    const n = nodes[idx];
+    const dx = mx - n.x;
+    const dy = my - n.y;
+    const d = Math.sqrt(dx * dx + dy * dy);
+    
+    if (d < 150) {
+      affectedByMouse.add(idx);
+      const angle = Math.atan2(dy, dx);
+      const force = (1 - d / 150) * 25;
+      circle.setAttribute('cx', n.x - Math.cos(angle) * force);
+      circle.setAttribute('cy', n.y - Math.sin(angle) * force);
+    }
+  });
+
+  const lines = connGroup.querySelectorAll('line');
+  lines.forEach(line => {
+    const from = parseInt(line.dataset.from);
+    const to = parseInt(line.dataset.to);
+    const c1 = nodesGroup.querySelectorAll('circle')[from];
+    const c2 = nodesGroup.querySelectorAll('circle')[to];
+    line.setAttribute('x1', c1.getAttribute('cx'));
+    line.setAttribute('y1', c1.getAttribute('cy'));
+    line.setAttribute('x2', c2.getAttribute('cx'));
+    line.setAttribute('y2', c2.getAttribute('cy'));
+  });
+});
+
+hero.addEventListener('mouseleave', () => {
+  affectedByMouse.clear();
+  const circles = nodesGroup.querySelectorAll('circle');
+  circles.forEach((c, i) => {
+    c.setAttribute('cx', origPos[i].x);
+    c.setAttribute('cy', origPos[i].y);
+  });
+  
+  const lines = connGroup.querySelectorAll('line');
+  lines.forEach(line => {
+    const from = parseInt(line.dataset.from);
+    const to = parseInt(line.dataset.to);
+    line.setAttribute('x1', origPos[from].x);
+    line.setAttribute('y1', origPos[from].y);
+    line.setAttribute('x2', origPos[to].x);
+    line.setAttribute('y2', origPos[to].y);
+  });
+});
+</script>
+
+</body>
+</html>
