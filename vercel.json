@@ -6,7 +6,7 @@
   "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
-  "env": [],
+  "env": {},
   "rewrites": [
     {
       "source": "/(.*)",
