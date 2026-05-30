@@ -1,15 +1,5 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/.*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=86400"
-        }
-      ]
-    }
-  ]
+  "buildCommand": "echo 'Static site'",
+  "outputDirectory": ".",
+  "cleanUrls": false
 }
