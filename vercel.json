@@ -1,18 +1,6 @@
 {
-  "name": "iara-forstreuter",
-  "version": 2,
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": "./",
-  "public": true,
   "cleanUrls": true,
   "trailingSlash": false,
-  "env": {},
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
-  ],
   "headers": [
     {
       "source": "/.*",
