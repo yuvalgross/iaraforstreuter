@@ -74,11 +74,26 @@
   .portfolio {
     padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 60px);
     background: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bg-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
   }
   
   .portfolio .wrap {
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
   }
   
   .section-title {
@@ -308,6 +323,25 @@
 </section>
 
 <section class="portfolio alt" id="work">
+  <svg class="bg-animation" id="work-svg" viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad-coral-work" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:0.15" />
+        <stop offset="100%" style="stop-color:#ff4757;stop-opacity:0.08" />
+      </linearGradient>
+      <linearGradient id="grad-teal-work" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#13c2c2;stop-opacity:0.15" />
+        <stop offset="100%" style="stop-color:#0a8080;stop-opacity:0.08" />
+      </linearGradient>
+      <linearGradient id="grad-purple-work" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#9254de;stop-opacity:0.15" />
+        <stop offset="100%" style="stop-color:#722ed1;stop-opacity:0.08" />
+      </linearGradient>
+    </defs>
+    <g id="connections-work" />
+    <g id="nodes-work" />
+  </svg>
+
   <div class="wrap">
     <h2 class="section-title">Selected Work</h2>
     <div class="portfolio-grid">
@@ -750,6 +784,55 @@ hero.addEventListener('mouseleave', () => {
     line.setAttribute('y2', origPos[to].y);
   });
 });
+
+// Animate work section SVG
+const workSvg = document.getElementById('work-svg');
+if (workSvg) {
+  const nodesGroupWork = document.getElementById('nodes-work');
+  const connGroupWork = document.getElementById('connections-work');
+  
+  // Create circles for work SVG
+  nodes.forEach((node, idx) => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', node.x);
+    circle.setAttribute('cy', node.y);
+    circle.setAttribute('r', node.r);
+    
+    let color = '#9254de';
+    if (node.cat === 'gov') color = '#ff6b6b';
+    else if (node.cat === 'eco') color = '#13c2c2';
+    else if (node.cat === 'prod') color = '#ff5252';
+    else if (node.cat === 'bio') color = '#9254de';
+    
+    circle.setAttribute('fill', color);
+    circle.setAttribute('opacity', '0.4');
+    circle.dataset.idx = idx;
+    nodesGroupWork.appendChild(circle);
+  });
+  
+  // Create lines for work SVG
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const dx = nodes[i].x - nodes[j].x;
+      const dy = nodes[i].y - nodes[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if ((nodes[i].cat === nodes[j].cat && dist < 180) || (nodes[i].cat !== nodes[j].cat && dist < 140 && Math.random() > 0.92)) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', nodes[i].x);
+        line.setAttribute('y1', nodes[i].y);
+        line.setAttribute('x2', nodes[j].x);
+        line.setAttribute('y2', nodes[j].y);
+        line.setAttribute('stroke', '#ddd');
+        line.setAttribute('stroke-width', '1');
+        line.setAttribute('opacity', '0.3');
+        line.dataset.from = i;
+        line.dataset.to = j;
+        connGroupWork.appendChild(line);
+      }
+    }
+  }
+}
 </script>
 
 </body>
