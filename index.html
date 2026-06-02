@@ -71,18 +71,19 @@
     margin: 2rem auto;
   }
   
-  @keyframes gradient-flow {
-    0% { background: linear-gradient(135deg, #A8D66E 0%, #6DB3D0 50%, #F0DCC4 100%); }
-    25% { background: linear-gradient(135deg, #7ECAE6 0%, #C4A1D8 50%, #A8D66E 100%); }
-    50% { background: linear-gradient(135deg, #F0DCC4 0%, #A8D66E 50%, #6DB3D0 100%); }
-    75% { background: linear-gradient(135deg, #C4A1D8 0%, #F0DCC4 50%, #7ECAE6 100%); }
-    100% { background: linear-gradient(135deg, #A8D66E 0%, #6DB3D0 50%, #F0DCC4 100%); }
+  @keyframes soft-subtle-shift {
+    0% { background: #F5F3F0; }
+    20% { background: #FAF8F6; }
+    40% { background: #F0EDE8; }
+    60% { background: #E8E2DC; }
+    80% { background: #F3EFEA; }
+    100% { background: #F5F3F0; }
   }
   
   .portfolio {
     padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 60px);
-    background: linear-gradient(135deg, #A8D66E 0%, #6DB3D0 50%, #F0DCC4 100%);
-    animation: gradient-flow 18s ease-in-out infinite;
+    background: #F5F3F0;
+    animation: soft-subtle-shift 30s ease-in-out infinite;
     position: relative;
     overflow: hidden;
   }
@@ -90,7 +91,7 @@
   @media (prefers-reduced-motion: reduce) {
     .portfolio {
       animation: none;
-      background: linear-gradient(135deg, #A8D66E 0%, #6DB3D0 50%, #F0DCC4 100%);
+      background: #F5F3F0;
     }
   }
   
