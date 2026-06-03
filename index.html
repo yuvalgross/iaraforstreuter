@@ -672,14 +672,14 @@ for (let i = 0; i < nodes.length; i++) {
     const dist = Math.sqrt(dx * dx + dy * dy);
     
     let shouldConnect = false;
-    let lineColor = '#9254de';
+    let lineColor = '#0056B3';
     
     if (nodes[i].cat === nodes[j].cat && dist < 180) {
       shouldConnect = true;
-      lineColor = Math.random() > 0.5 ? '#13c2c2' : '#9254de';
+      lineColor = '#0056B3';
     } else if (nodes[i].cat !== nodes[j].cat && dist < 140 && Math.random() > 0.92) {
       shouldConnect = true;
-      lineColor = Math.random() > 0.5 ? '#4db8ac' : '#ba68c8';
+      lineColor = '#0056B3';
     }
     
     if (shouldConnect) {
