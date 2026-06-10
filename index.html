@@ -71,29 +71,11 @@
     margin: 2rem auto;
   }
   
-  @keyframes soft-subtle-flow {
-    0% { background: linear-gradient(135deg, rgba(255, 179, 217, 0.15) 0%, rgba(220, 201, 232, 0.15) 50%, rgba(255, 214, 153, 0.15) 100%), #FFFFFF; }
-    16% { background: linear-gradient(135deg, rgba(255, 214, 153, 0.15) 0%, rgba(220, 201, 232, 0.15) 50%, rgba(255, 179, 217, 0.15) 100%), #FFFFFF; }
-    33% { background: linear-gradient(135deg, rgba(220, 201, 232, 0.15) 0%, rgba(255, 179, 217, 0.15) 50%, rgba(255, 214, 153, 0.15) 100%), #FFFFFF; }
-    50% { background: linear-gradient(135deg, rgba(255, 179, 217, 0.15) 0%, rgba(255, 214, 153, 0.15) 50%, rgba(220, 201, 232, 0.15) 100%), #FFFFFF; }
-    66% { background: linear-gradient(135deg, rgba(255, 214, 153, 0.15) 0%, rgba(220, 201, 232, 0.15) 50%, rgba(255, 179, 217, 0.15) 100%), #FFFFFF; }
-    83% { background: linear-gradient(135deg, rgba(220, 201, 232, 0.15) 0%, rgba(255, 214, 153, 0.15) 50%, rgba(255, 179, 217, 0.15) 100%), #FFFFFF; }
-    100% { background: linear-gradient(135deg, rgba(255, 179, 217, 0.15) 0%, rgba(220, 201, 232, 0.15) 50%, rgba(255, 214, 153, 0.15) 100%), #FFFFFF; }
-  }
-  
   .portfolio {
     padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 60px);
-    background: linear-gradient(135deg, rgba(255, 179, 217, 0.15) 0%, rgba(220, 201, 232, 0.15) 50%, rgba(255, 214, 153, 0.15) 100%), #FFFFFF;
-    animation: soft-subtle-flow 35s ease-in-out infinite;
+    background: #F3E5F5;
     position: relative;
     overflow: hidden;
-  }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .portfolio {
-      animation: none;
-      background: #FFFFFF;
-    }
   }
   
   @media (prefers-reduced-motion: reduce) {
