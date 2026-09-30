@@ -47,21 +47,25 @@
   }
   
   .hero h1 {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: clamp(48px, 8vw, 72px);
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 1.5rem;
     color: #fff;
-    line-height: 1.15;
-    letter-spacing: 1px;
+    line-height: 1.1;
+    letter-spacing: 8px;
+    text-transform: uppercase;
   }
-  
+
   .hero p {
-    font-size: clamp(16px, 2.5vw, 22px);
+    font-size: clamp(14px, 2vw, 18px);
     color: #e0e0e0;
     margin-bottom: 2rem;
-    font-weight: 300;
-    line-height: 1.9;
+    font-weight: 400;
+    line-height: 1.8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
   }
   
   .divider {
@@ -119,12 +123,13 @@
   }
   
   .section-title {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: clamp(36px, 5vw, 52px);
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 3rem;
     color: #000;
-    letter-spacing: 1px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
   }
   
   .portfolio-grid {
@@ -143,7 +148,11 @@
   }
 
   .project-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-6px);
+  }
+
+  .project-card:hover .project-image {
+    opacity: 0.9;
   }
 
   .project-image {
@@ -174,21 +183,24 @@
   }
 
   .project-content h3 {
-    font-family: 'EB Garamond', serif;
-    font-size: 26px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 20px;
     margin-bottom: 0.8rem;
     color: #000;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.3;
+    letter-spacing: 2px;
+    text-transform: uppercase;
   }
 
   .project-content p {
-    font-size: 15px;
+    font-size: 14px;
     color: #666;
     margin-bottom: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1.6;
     flex-grow: 1;
+    letter-spacing: 0.5px;
   }
 
   .project-tags {
@@ -208,23 +220,38 @@
   }
   
   .contact {
-    background: #0056B3;
+    background: linear-gradient(135deg, #0056B3 0%, #003D84 100%);
     color: #fff;
     padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 60px);
     text-align: center;
+    position: relative;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 68, 68, 0.1) 0%, transparent 70%);
+    z-index: 0;
   }
   
   .contact .wrap {
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
   }
   
   .contact h2 {
-    font-family: 'EB Garamond', serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: clamp(42px, 6vw, 56px);
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 1.5rem;
-    letter-spacing: 1px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
   }
   
   .contact p {
@@ -238,19 +265,21 @@
     display: inline-block;
     margin-top: 2rem;
     padding: 14px 40px;
-    border: 1px solid #fff;
-    color: #fff;
+    border: 2px solid #FF4444;
+    color: #FF4444;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 600;
     transition: all 0.3s ease;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    letter-spacing: 0.5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: transparent;
   }
-  
+
   .contact-link:hover {
-    background: #fff;
-    color: #0056B3;
+    background: #FF4444;
+    color: #fff;
   }
   
   footer {
@@ -300,6 +329,28 @@
     opacity: 0.6;
   }
   
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .project-card {
+    animation: fadeInUp 0.6s ease-out both;
+  }
+
+  .project-card:nth-child(1) { animation-delay: 0.1s; }
+  .project-card:nth-child(2) { animation-delay: 0.2s; }
+  .project-card:nth-child(3) { animation-delay: 0.3s; }
+  .project-card:nth-child(4) { animation-delay: 0.4s; }
+  .project-card:nth-child(5) { animation-delay: 0.5s; }
+  .project-card:nth-child(6) { animation-delay: 0.6s; }
+
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -468,7 +519,7 @@
 </footer>
 
 <script>
-const allColors = ['#ff6b6b', '#ff5252', '#ff7f7f', '#13c2c2', '#26a69a', '#4db8ac', '#00bcd4', '#9254de', '#ab47bc', '#ba68c8', '#ce93d8'];
+const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C00'];
 
 const nodes = [
   { x: 500, y: 200, r: 22, cat: 'gov' },
@@ -624,8 +675,10 @@ nodes.forEach((node, i) => {
   circle.setAttribute('cy', node.y);
   circle.setAttribute('r', node.r);
   circle.setAttribute('fill', node.color);
-  circle.setAttribute('opacity', '0.55');
+  circle.setAttribute('opacity', '0.65');
   circle.dataset.idx = i;
+  node.pulsePhase = Math.random() * Math.PI * 2;
+  node.pulseSpeed = Math.random() * 0.02 + 0.01;
   nodesGroup.appendChild(circle);
 });
 
@@ -703,6 +756,11 @@ function animateDrift() {
   
   circles.forEach((circle, idx) => {
     const node = nodes[idx];
+
+    // Pulsing opacity
+    const pulse = Math.sin(animationTime * node.pulseSpeed + node.pulsePhase) * 0.3 + 0.65;
+    circle.setAttribute('opacity', Math.max(0.35, pulse));
+
     if (node.driftAmount !== undefined && !affectedByMouse.has(idx)) {
       const driftX = Math.sin(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
       const driftY = Math.cos(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
