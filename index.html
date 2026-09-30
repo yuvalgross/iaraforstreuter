@@ -134,35 +134,43 @@
   
   .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 3.5rem;
-    max-width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem 3.5rem;
+    max-width: 1400px;
     margin: 0 auto;
   }
 
   .project-card {
-    overflow: hidden;
-    transition: all 0.3s ease;
+    overflow: visible;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     display: flex;
     flex-direction: column;
+    cursor: pointer;
   }
 
   .project-card:hover {
-    transform: translateY(-6px);
+    transform: scale(1.04) translateY(-10px);
   }
 
   .project-card:hover .project-image {
-    opacity: 0.9;
+    transform: scale(1.08) rotate(-1deg);
+    filter: brightness(1.15);
+    box-shadow: 0 20px 60px rgba(255, 68, 68, 0.15);
   }
 
   .project-image {
     width: 100%;
-    height: 380px;
-    background: #f5f5f5;
+    height: 340px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 48px;
+    font-size: 72px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
   }
 
   .project-content {
@@ -173,13 +181,13 @@
   }
 
   .project-category {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: #999;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #FF4444;
     text-transform: uppercase;
-    margin-bottom: 0.6rem;
-    font-weight: 400;
-    display: none;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    display: block;
   }
 
   .project-content h3 {
@@ -351,9 +359,22 @@
   .project-card:nth-child(5) { animation-delay: 0.5s; }
   .project-card:nth-child(6) { animation-delay: 0.6s; }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    .portfolio-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem 2.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .portfolio-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .project-image {
+      height: 300px;
+    }
     .nav-links { display: none; }
-    .portfolio-grid { grid-template-columns: 1fr; gap: 2rem; }
   }
 </style>
 </head>
@@ -522,138 +543,29 @@
 const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C00'];
 
 const nodes = [
-  { x: 500, y: 200, r: 22, cat: 'gov' },
-  { x: 380, y: 320, r: 16, cat: 'gov' },
-  { x: 580, y: 300, r: 18, cat: 'gov' },
-  { x: 420, y: 450, r: 14, cat: 'gov' },
-  { x: 580, y: 480, r: 15, cat: 'gov' },
-  { x: 500, y: 600, r: 12, cat: 'gov' },
-  { x: 340, y: 380, r: 11, cat: 'gov' },
-  { x: 620, y: 380, r: 13, cat: 'gov' },
-  { x: 460, y: 280, r: 10, cat: 'gov' },
-  
-  { x: 700, y: 80, r: 18, cat: 'eco' },
-  { x: 600, y: 120, r: 14, cat: 'eco' },
-  { x: 800, y: 100, r: 15, cat: 'eco' },
-  { x: 720, y: 160, r: 12, cat: 'eco' },
-  { x: 650, y: 180, r: 11, cat: 'eco' },
-  
-  { x: 150, y: 200, r: 20, cat: 'prod' },
-  { x: 80, y: 340, r: 15, cat: 'prod' },
-  { x: 200, y: 380, r: 14, cat: 'prod' },
-  { x: 120, y: 520, r: 13, cat: 'prod' },
-  { x: 220, y: 580, r: 12, cat: 'prod' },
-  { x: 100, y: 240, r: 11, cat: 'prod' },
-  { x: 180, y: 450, r: 10, cat: 'prod' },
-  { x: 260, y: 320, r: 9, cat: 'prod' },
-  
-  { x: 950, y: 250, r: 21, cat: 'bio' },
-  { x: 1080, y: 350, r: 16, cat: 'bio' },
-  { x: 880, y: 420, r: 15, cat: 'bio' },
-  { x: 1020, y: 500, r: 14, cat: 'bio' },
-  { x: 1100, y: 580, r: 13, cat: 'bio' },
-  { x: 950, y: 620, r: 12, cat: 'bio' },
-  { x: 1000, y: 320, r: 12, cat: 'bio' },
-  { x: 1120, y: 450, r: 11, cat: 'bio' },
-  { x: 820, y: 520, r: 10, cat: 'bio' },
-  
-  { x: 1200, y: 150, r: 17, cat: 'act' },
-  { x: 1280, y: 280, r: 14, cat: 'act' },
-  { x: 1150, y: 320, r: 13, cat: 'act' },
-  { x: 1250, y: 200, r: 11, cat: 'act' },
-  { x: 1310, y: 380, r: 10, cat: 'act' },
-  
-  { x: 700, y: 400, r: 19, cat: 'com' },
-  { x: 750, y: 520, r: 15, cat: 'com' },
-  { x: 630, y: 520, r: 14, cat: 'com' },
-  { x: 680, y: 300, r: 13, cat: 'com' },
-  { x: 780, y: 380, r: 11, cat: 'com' },
-  
-  { x: 1330, y: 100, r: 10, cat: 'act' },
-  { x: 1330, y: 200, r: 9, cat: 'mix' },
-  { x: 1330, y: 300, r: 10, cat: 'mix' },
-  { x: 1330, y: 400, r: 9, cat: 'mix' },
-  { x: 1330, y: 500, r: 10, cat: 'mix' },
-  { x: 1330, y: 600, r: 9, cat: 'mix' },
-  
-  { x: 40, y: 100, r: 10, cat: 'prod' },
-  { x: 40, y: 200, r: 9, cat: 'mix' },
-  { x: 40, y: 300, r: 10, cat: 'mix' },
-  { x: 40, y: 400, r: 9, cat: 'mix' },
-  { x: 40, y: 500, r: 10, cat: 'mix' },
-  { x: 40, y: 600, r: 9, cat: 'mix' },
-  
-  { x: 150, y: 20, r: 9, cat: 'mix' },
-  { x: 350, y: 20, r: 10, cat: 'mix' },
-  { x: 550, y: 20, r: 9, cat: 'mix' },
-  { x: 750, y: 20, r: 10, cat: 'mix' },
-  { x: 950, y: 20, r: 9, cat: 'mix' },
-  { x: 1150, y: 20, r: 10, cat: 'mix' },
-  { x: 1300, y: 20, r: 9, cat: 'mix' },
-  
-  { x: 150, y: 680, r: 9, cat: 'mix' },
-  { x: 350, y: 680, r: 10, cat: 'mix' },
-  { x: 550, y: 680, r: 9, cat: 'mix' },
-  { x: 750, y: 680, r: 10, cat: 'mix' },
-  { x: 950, y: 680, r: 9, cat: 'mix' },
-  { x: 1150, y: 680, r: 10, cat: 'mix' },
-  { x: 1300, y: 680, r: 9, cat: 'mix' },
+  { x: 500, y: 200, r: 24, cat: 'design' },
+  { x: 380, y: 320, r: 18, cat: 'design' },
+  { x: 580, y: 300, r: 20, cat: 'design' },
+  { x: 420, y: 450, r: 16, cat: 'design' },
+  { x: 580, y: 480, r: 17, cat: 'design' },
+  { x: 500, y: 600, r: 14, cat: 'design' },
 
-  { x: 75, y: 75, r: 7, cat: 'mix' },
-  { x: 275, y: 75, r: 7, cat: 'mix' },
-  { x: 475, y: 75, r: 7, cat: 'mix' },
-  { x: 675, y: 75, r: 7, cat: 'mix' },
-  { x: 875, y: 75, r: 7, cat: 'mix' },
-  { x: 1075, y: 75, r: 7, cat: 'mix' },
-  { x: 1275, y: 75, r: 7, cat: 'mix' },
-  
-  { x: 75, y: 175, r: 8, cat: 'mix' },
-  { x: 275, y: 175, r: 8, cat: 'mix' },
-  { x: 475, y: 175, r: 8, cat: 'mix' },
-  { x: 675, y: 175, r: 8, cat: 'mix' },
-  { x: 875, y: 175, r: 8, cat: 'mix' },
-  { x: 1075, y: 175, r: 8, cat: 'mix' },
-  { x: 1275, y: 175, r: 8, cat: 'mix' },
-  
-  { x: 75, y: 275, r: 7, cat: 'mix' },
-  { x: 275, y: 275, r: 7, cat: 'mix' },
-  { x: 475, y: 275, r: 7, cat: 'mix' },
-  { x: 675, y: 275, r: 7, cat: 'mix' },
-  { x: 875, y: 275, r: 7, cat: 'mix' },
-  { x: 1075, y: 275, r: 7, cat: 'mix' },
-  { x: 1275, y: 275, r: 7, cat: 'mix' },
-  
-  { x: 75, y: 375, r: 8, cat: 'mix' },
-  { x: 275, y: 375, r: 8, cat: 'mix' },
-  { x: 475, y: 375, r: 8, cat: 'mix' },
-  { x: 675, y: 375, r: 8, cat: 'mix' },
-  { x: 875, y: 375, r: 8, cat: 'mix' },
-  { x: 1075, y: 375, r: 8, cat: 'mix' },
-  { x: 1275, y: 375, r: 8, cat: 'mix' },
-  
-  { x: 75, y: 475, r: 7, cat: 'mix' },
-  { x: 275, y: 475, r: 7, cat: 'mix' },
-  { x: 475, y: 475, r: 7, cat: 'mix' },
-  { x: 675, y: 475, r: 7, cat: 'mix' },
-  { x: 875, y: 475, r: 7, cat: 'mix' },
-  { x: 1075, y: 475, r: 7, cat: 'mix' },
-  { x: 1275, y: 475, r: 7, cat: 'mix' },
-  
-  { x: 75, y: 575, r: 8, cat: 'mix' },
-  { x: 275, y: 575, r: 8, cat: 'mix' },
-  { x: 475, y: 575, r: 8, cat: 'mix' },
-  { x: 675, y: 575, r: 8, cat: 'mix' },
-  { x: 875, y: 575, r: 8, cat: 'mix' },
-  { x: 1075, y: 575, r: 8, cat: 'mix' },
-  { x: 1275, y: 575, r: 8, cat: 'mix' },
-  
-  { x: 75, y: 675, r: 7, cat: 'mix' },
-  { x: 275, y: 675, r: 7, cat: 'mix' },
-  { x: 475, y: 675, r: 7, cat: 'mix' },
-  { x: 675, y: 675, r: 7, cat: 'mix' },
-  { x: 875, y: 675, r: 7, cat: 'mix' },
-  { x: 1075, y: 675, r: 7, cat: 'mix' },
-  { x: 1275, y: 675, r: 7, cat: 'mix' },
+  { x: 700, y: 80, r: 20, cat: 'strategy' },
+  { x: 600, y: 120, r: 16, cat: 'strategy' },
+  { x: 800, y: 100, r: 17, cat: 'strategy' },
+  { x: 720, y: 180, r: 14, cat: 'strategy' },
+
+  { x: 150, y: 200, r: 22, cat: 'systems' },
+  { x: 80, y: 340, r: 17, cat: 'systems' },
+  { x: 200, y: 380, r: 16, cat: 'systems' },
+  { x: 120, y: 520, r: 15, cat: 'systems' },
+  { x: 220, y: 580, r: 14, cat: 'systems' },
+
+  { x: 950, y: 250, r: 23, cat: 'innovation' },
+  { x: 1080, y: 350, r: 18, cat: 'innovation' },
+  { x: 880, y: 420, r: 17, cat: 'innovation' },
+  { x: 1020, y: 500, r: 16, cat: 'innovation' },
+  { x: 1100, y: 580, r: 15, cat: 'innovation' },
 ];
 
 nodes.forEach(node => {
