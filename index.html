@@ -84,8 +84,8 @@
   }
   
   .portfolio {
-    padding: clamp(80px, 10vw, 120px) clamp(20px, 5vw, 60px);
-    background: #FFFEF0;
+    padding: clamp(100px, 12vw, 140px) clamp(20px, 5vw, 60px);
+    background: #fff;
     position: relative;
     overflow: hidden;
   }
@@ -181,13 +181,17 @@
   }
 
   .project-category {
-    font-size: 12px;
-    letter-spacing: 2px;
+    font-size: 11px;
+    letter-spacing: 3px;
     color: #FF4444;
     text-transform: uppercase;
-    margin-bottom: 0.8rem;
-    font-weight: 600;
+    margin-bottom: 1rem;
+    font-weight: 700;
     display: block;
+    position: relative;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #FF4444;
+    width: fit-content;
   }
 
   .project-content h3 {
@@ -291,12 +295,12 @@
   }
   
   footer {
-    background: #0056B3;
-    color: #e0e0e0;
+    background: #2a2a2a;
+    color: #aaa;
     padding: 3rem;
     text-align: center;
     font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
   
   .nav-sticky {
@@ -415,8 +419,8 @@
   </div>
 </section>
 
-<svg class="wave-divider" viewBox="0 0 1200 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M0,60 Q300,30 600,60 T1200,60 L1200,120 L0,120 Z" fill="#FFFEF0" />
+<svg class="wave-divider" viewBox="0 0 1200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,50 Q150,20 300,35 T600,50 T900,40 T1200,50 L1200,100 L0,100 Z" fill="#fff" />
 </svg>
 
 <section class="portfolio alt" id="work">
@@ -617,8 +621,8 @@ backgroundDots.forEach((dot, idx) => {
   circle.setAttribute('cx', dot.x);
   circle.setAttribute('cy', dot.y);
   circle.setAttribute('r', dot.r);
-  circle.setAttribute('fill', '#87ceeb');
-  circle.setAttribute('opacity', '0.30');
+  circle.setAttribute('fill', '#fff');
+  circle.setAttribute('opacity', '0.2');
   circle.dataset.bgIdx = idx;
   bgDotsGroup.appendChild(circle);
 });
@@ -630,14 +634,14 @@ for (let i = 0; i < nodes.length; i++) {
     const dist = Math.sqrt(dx * dx + dy * dy);
     
     let shouldConnect = false;
-    let lineColor = '#6DB3D0';
-    
+    let lineColor = '#fff';
+
     if (nodes[i].cat === nodes[j].cat && dist < 180) {
       shouldConnect = true;
-      lineColor = '#6DB3D0';
+      lineColor = '#fff';
     } else if (nodes[i].cat !== nodes[j].cat && dist < 140 && Math.random() > 0.92) {
       shouldConnect = true;
-      lineColor = '#6DB3D0';
+      lineColor = '#fff';
     }
     
     if (shouldConnect) {
@@ -647,8 +651,8 @@ for (let i = 0; i < nodes.length; i++) {
       line.setAttribute('x2', nodes[j].x);
       line.setAttribute('y2', nodes[j].y);
       line.setAttribute('stroke', lineColor);
-      line.setAttribute('stroke-width', '2.5');
-      line.setAttribute('opacity', '0.12');
+      line.setAttribute('stroke-width', '2.8');
+      line.setAttribute('opacity', '0.25');
       line.setAttribute('stroke-linecap', 'round');
       line.setAttribute('stroke-linejoin', 'round');
       line.dataset.from = i;
