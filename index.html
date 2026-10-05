@@ -736,7 +736,7 @@ nodes.forEach(node => {
   if (Math.random() > 0.2) {
     node.driftAmount = Math.random() * 70 + 45;
     node.driftPhase = Math.random() * Math.PI * 2;
-    node.driftSpeed = Math.random() * 0.045 + 0.022;
+    node.driftSpeed = Math.random() * 0.070 + 0.035;
   }
 });
 
@@ -891,7 +891,7 @@ document.addEventListener('mousemove', (e) => {
     if (d < 150) {
       affectedByMouse.add(idx);
       const angle = Math.atan2(dy, dx);
-      const force = (1 - d / 150) * 3;
+      const force = (1 - d / 150) * 1.5;
       circle.setAttribute('cx', n.x - Math.cos(angle) * force);
       circle.setAttribute('cy', n.y - Math.sin(angle) * force);
     }
