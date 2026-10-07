@@ -192,11 +192,10 @@
   
   .portfolio-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem 5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem 3.5rem;
     max-width: 1400px;
     margin: 0 auto;
-    align-items: start;
   }
 
   .project-card {
@@ -205,14 +204,14 @@
     display: flex;
     flex-direction: column;
     cursor: pointer;
-    border: none;
-    border-radius: 0;
-    padding: 0;
-    background: transparent;
+    border: 1px solid #404040;
+    border-radius: 20px;
+    padding: 2rem 2rem;
   }
 
   .project-card:hover {
-    transform: translateY(-8px);
+    transform: scale(1.04) translateY(-10px);
+    border-color: #FFD700;
   }
 
   .project-content {
@@ -246,25 +245,20 @@
 
   .project-illustration-wrapper {
     width: 100%;
-    height: 400px;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: transparent;
-    border-radius: 0;
-    margin-bottom: 0;
-    overflow: hidden;
+    border-radius: 20px;
+    margin-bottom: -20px;
   }
 
   .project-illustration-wrapper svg {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    object-fit: cover;
-  }
-
-  .project-with-illustration {
-    grid-column: span 1;
+    width: 280%;
+    height: auto;
+    max-width: 280%;
+    object-fit: contain;
   }
 
   .project-with-illustration .project-card {
@@ -272,28 +266,28 @@
   }
 
   .thesis-wrapper {
-    height: 400px !important;
+    height: 280px !important;
     width: 100% !important;
-    overflow: hidden !important;
-    margin-bottom: 0 !important;
+    overflow: visible !important;
+    margin-bottom: -20px !important;
   }
 
   .thesis-illustration {
-    width: 100% !important;
-    height: 100% !important;
+    width: 400px !important;
+    height: 500px !important;
     max-width: none !important;
   }
 
   .fungi-wrapper {
-    height: 400px !important;
+    height: 280px !important;
     width: 100% !important;
-    overflow: hidden !important;
-    margin-bottom: 0 !important;
+    overflow: visible !important;
+    margin-bottom: -20px !important;
   }
 
   .fungi-illustration {
-    width: 100% !important;
-    height: 100% !important;
+    width: 400px !important;
+    height: 500px !important;
     max-width: none !important;
   }
 
@@ -482,24 +476,15 @@
 
   @media (max-width: 1024px) {
     .portfolio-grid {
-      grid-template-columns: 1fr;
-      gap: 6rem 0;
-    }
-    .project-illustration-wrapper {
-      height: 300px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem 2.5rem;
     }
   }
 
   @media (max-width: 640px) {
     .portfolio-grid {
       grid-template-columns: 1fr;
-      gap: 4rem 0;
-    }
-    .project-illustration-wrapper {
-      height: 250px;
-    }
-    .project-content p {
-      font-size: clamp(16px, 3vw, 22px);
+      gap: 2.5rem;
     }
     .nav-links { display: none; }
   }
