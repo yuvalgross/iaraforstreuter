@@ -1357,25 +1357,39 @@ const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C
 // Nodes sit on rings and are linked around each ring by arcs that follow
 // the circle; long sweeping curves connect the outer loops to the core.
 const LOOPS = [
-  { name: 'core',           cx: 700,  cy: 300, R: 120, n: 6, r: 21, start: -90, core: true },
-  { name: 'systems',        cx: 245,  cy: 235, R: 85,  n: 5, r: 13, start: -60 },
-  { name: 'futures',        cx: 455,  cy: 110, R: 62,  n: 4, r: 12, start: -45 },
-  { name: 'sustainability', cx: 990,  cy: 115, R: 72,  n: 5, r: 12, start: -20 },
-  { name: 'design',         cx: 1235, cy: 270, R: 88,  n: 5, r: 13, start: 10 },
-  { name: 'participation',  cx: 1005, cy: 445, R: 80,  n: 5, r: 12, start: 30 },
-  { name: 'learning',       cx: 365,  cy: 440, R: 78,  n: 4, r: 12, start: 20 },
+  { name: 'core',           cx: 700,  cy: 295, R: 118, n: 6, r: 21, start: -80, core: true, sx: 1.12, sy: 0.92, tilt: 12 },
+  { name: 'systems',        cx: 250,  cy: 225, R: 82,  n: 5, r: 13, start: -40, sx: 1.25, sy: 0.8,  tilt: -25 },
+  { name: 'futures',        cx: 470,  cy: 100, R: 62,  n: 4, r: 12, start: -20, sx: 1.3,  sy: 0.75, tilt: 15 },
+  { name: 'sustainability', cx: 985,  cy: 120, R: 70,  n: 5, r: 12, start: 0,   sx: 1.2,  sy: 0.85, tilt: -10 },
+  { name: 'design',         cx: 1230, cy: 285, R: 86,  n: 5, r: 13, start: 25,  sx: 0.85, sy: 1.2,  tilt: 20 },
+  { name: 'participation',  cx: 990,  cy: 450, R: 78,  n: 5, r: 12, start: 50,  sx: 1.3,  sy: 0.8,  tilt: 8 },
+  { name: 'learning',       cx: 380,  cy: 435, R: 74,  n: 4, r: 12, start: 5,   sx: 1.2,  sy: 0.85, tilt: -18 },
 ];
+// seeded random: the map looks hand-placed but is the same on every visit
+let seed = 20261106;
+const rand = () => { seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; };
 const nodes = [];
 LOOPS.forEach((L, li) => {
   L.phase = li * 1.7;
   L.members = [];
+  const tilt = L.tilt * Math.PI / 180, jitterA = L.core ? 10 : 20;
   for (let k = 0; k < L.n; k++) {
-    const ang = (L.start + k * 360 / L.n) * Math.PI / 180;
+    const ang = (L.start + k * 360 / L.n + (rand() * 2 - 1) * jitterA) * Math.PI / 180;
+    const rad = L.R * (L.core ? 0.88 + rand() * 0.22 : 0.75 + rand() * 0.45);
+    const ex = Math.cos(ang) * rad * L.sx, ey = Math.sin(ang) * rad * L.sy;   // oval
     L.members.push(nodes.length);
-    nodes.push({ x: L.cx + Math.cos(ang) * L.R, y: L.cy + Math.sin(ang) * L.R,
-                 r: L.r + ((k * 7 + li) % 3) * (L.core ? 2 : 1.5), loop: li, core: !!L.core });
+    nodes.push({ x: L.cx + ex * Math.cos(tilt) - ey * Math.sin(tilt), y: L.cy + ex * Math.sin(tilt) + ey * Math.cos(tilt),
+                 r: L.r * (0.8 + rand() * 0.45), loop: li, core: !!L.core });
   }
 });
+// loose single elements scattered between the loops
+const LOOSE = { name: 'loose', loose: true, members: [], n: 0, phase: 0.4, cx: 0, cy: 0 };
+[[585, 470], [835, 545], [1100, 215], [600, 125], [140, 375], [1345, 445], [835, 75]].forEach(([x, y]) => {
+  LOOSE.members.push(nodes.length);
+  nodes.push({ x, y, r: 8 + rand() * 5, loop: LOOPS.length, loose: true });
+});
+LOOSE.n = LOOSE.members.length;
+LOOPS.push(LOOSE);
 nodes.forEach((node, i) => {
   node.color = allColors[i % allColors.length];
   node.wobbleAmp = 3 + (i % 3);                        // tiny, in place
@@ -1407,8 +1421,8 @@ nodes.forEach((node, i) => {
 // Edges. 'ring' arcs run around each loop and close it (feedback loop);
 // 'link' curves sweep between loops; 'cross' is a chord inside the core.
 const EDGES = [];
-LOOPS.forEach((L, li) => L.members.forEach((m, k) =>
-  EDGES.push({ a: m, b: L.members[(k + 1) % L.n], kind: L.core ? 'core' : 'ring', loop: li })));
+LOOPS.forEach((L, li) => { if (!L.loose) L.members.forEach((m, k) =>
+  EDGES.push({ a: m, b: L.members[(k + 1) % L.n], kind: L.core ? 'core' : 'ring', loop: li, bulge: 0.6 + rand() * 0.75 })); });
 const nearest = (fromLoop, toLoop) => {
   let best = [0, 0], bd = 1e9;
   LOOPS[fromLoop].members.forEach(i => LOOPS[toLoop].members.forEach(j => {
@@ -1424,6 +1438,12 @@ const nearest = (fromLoop, toLoop) => {
 EDGES.push({ a: LOOPS[1].members[0], b: LOOPS[3].members[2], kind: 'sweep', side: -1 });
 EDGES.push({ a: LOOPS[6].members[1], b: LOOPS[4].members[2], kind: 'sweep', side: 1 });
 EDGES.push({ a: LOOPS[0].members[0], b: LOOPS[0].members[3], kind: 'cross', side: 1 });
+LOOSE.members.forEach((i, k) => {
+  const byDist = nodes.map((n, j) => [Math.hypot(n.x - nodes[i].x, n.y - nodes[i].y), j]).filter(([, j]) => !nodes[j].loose).sort((p, q) => p[0] - q[0]);
+  EDGES.push({ a: byDist[0][1], b: i, kind: 'link', side: k % 2 ? 1 : -1 });
+  const other = byDist.find(([, j]) => nodes[j].loop !== nodes[byDist[0][1]].loop);
+  if (other) EDGES.push({ a: i, b: other[1], kind: 'sweep', side: k % 2 ? -1 : 1 });
+});
 
 const EDGE_STYLE = { core: [2.3, 0.6], ring: [1.8, 0.5], link: [1.5, 0.42], sweep: [1.1, 0.26], cross: [1.4, 0.3] };
 function loopCenter(li) {
@@ -1440,7 +1460,7 @@ function edgePath(e) {
     // bulge away from the loop centre so the arc follows the circle
     const [lx, ly] = loopCenter(e.loop);
     let ux = mx - lx, uy = my - ly; const ul = Math.hypot(ux, uy) || 1; ux /= ul; uy /= ul;
-    const k = 0.33 * len;
+    const k = 0.33 * len * (e.bulge || 1);
     cx = mx + ux * k; cy = my + uy * k;
   } else {
     const k = (e.kind === 'sweep' ? 0.35 : e.kind === 'cross' ? 0.15 : 0.28) * len * (e.side || 1);
@@ -1477,7 +1497,13 @@ function animateDrift() {
   const t = animationTime;
   const circles = nodesGroup.children;
   // each loop breathes (scales), sways (small rotation) and drifts a little
+  LOOSE.members.forEach(i => {
+    const n = nodes[i], w = t * n.wobbleSpeed + n.wobblePhase;
+    cur[i].x = n.x + Math.sin(t * 0.13 + n.wobblePhase) * 12 + Math.sin(w) * n.wobbleAmp;
+    cur[i].y = n.y + Math.cos(t * 0.11 + n.wobblePhase) * 10 + Math.cos(w * 0.8) * n.wobbleAmp;
+  });
   LOOPS.forEach((L, li) => {
+    if (L.loose) return;
     const s = 1 + (L.core ? 0.035 : 0.06) * Math.sin(t * 0.3 + L.phase);          // ~20 s per breath
     const rot = (L.core ? 0.02 : 0.05) * Math.sin(t * 0.11 + L.phase);            // gentle sway
     const ox = 6 * Math.sin(t * 0.07 + L.phase), oy = 5 * Math.cos(t * 0.09 + L.phase);
