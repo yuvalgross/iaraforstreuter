@@ -1352,62 +1352,38 @@
 <script>
 const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C00'];
 
-const nodes = [
-  // Central cluster - Design thinking
-  { x: 700, y: 350, r: 22, cat: 'design' },
-  { x: 580, y: 220, r: 18, cat: 'design' },
-  { x: 820, y: 240, r: 20, cat: 'design' },
-  { x: 650, y: 450, r: 16, cat: 'design' },
-  { x: 800, y: 420, r: 18, cat: 'design' },
-  { x: 500, y: 350, r: 15, cat: 'design' },
-  { x: 750, y: 550, r: 17, cat: 'design' },
-
-  // Core cluster - Strategy
-  { x: 900, y: 280, r: 20, cat: 'strategy' },
-  { x: 920, y: 150, r: 16, cat: 'strategy' },
-  { x: 880, y: 420, r: 18, cat: 'strategy' },
-  { x: 950, y: 350, r: 15, cat: 'strategy' },
-  { x: 870, y: 520, r: 16, cat: 'strategy' },
-
-  // Systems cluster
-  { x: 480, y: 280, r: 19, cat: 'systems' },
-  { x: 420, y: 380, r: 17, cat: 'systems' },
-  { x: 550, y: 500, r: 15, cat: 'systems' },
-  { x: 450, y: 180, r: 16, cat: 'systems' },
-
-  // Innovation cluster
-  { x: 700, y: 580, r: 18, cat: 'innovation' },
-  { x: 850, y: 560, r: 16, cat: 'innovation' },
-  { x: 600, y: 650, r: 17, cat: 'innovation' },
-  { x: 520, y: 600, r: 15, cat: 'innovation' },
-  { x: 820, y: 150, r: 14, cat: 'strategy' },
-  { x: 620, y: 150, r: 14, cat: 'design' },
-  { x: 480, y: 550, r: 15, cat: 'systems' },
+// System-map layout: five clusters spread across the drawing, each a hub
+// with satellites around it. Positions are fixed so the map reads the same
+// on every visit; motion is a slow per-cluster "breathing" plus a small wobble.
+const CLUSTERS = [
+  { cat: 'systems',        cx: 215,  cy: 290, n: 5, start: -80 },
+  { cat: 'futures',        cx: 500,  cy: 185, n: 4, start: -20 },
+  { cat: 'participation',  cx: 715,  cy: 400, n: 5, start: -65 },
+  { cat: 'sustainability', cx: 935,  cy: 185, n: 4, start: 15 },
+  { cat: 'design',         cx: 1185, cy: 310, n: 5, start: -100 },
 ];
-
-nodes.forEach(node => {
-  node.color = allColors[Math.floor(Math.random() * allColors.length)];
-  if (Math.random() > 0.2) {
-    node.driftAmount = Math.random() * 70 + 45;
-    node.driftPhase = Math.random() * Math.PI * 2;
-    node.driftSpeed = Math.random() * 0.070 + 0.035;
-  }
+// satellites evenly spread around each hub, alternating near/far
+CLUSTERS.forEach(c => {
+  c.sats = [];
+  for (let k = 0; k < c.n; k++) c.sats.push([c.start + k * 360 / c.n + (k % 2 ? 12 : -8), k % 2 ? 125 : 100]);
 });
-
-// Keep the network inside the visible area: the wave divider covers the
-// bottom of the drawing, so fit the nodes between y=110 and y=470 and cap
-// each node's drift so it never goes above TOP or below BOTTOM.
-(function keepInView() {
-  const TOP = 40, BOTTOM = 580;
-  const ys = nodes.map(n => n.y), minY = Math.min(...ys), maxY = Math.max(...ys);
-  nodes.forEach(n => {
-    n.y = 110 + (n.y - minY) * (470 - 110) / (maxY - minY);
-    if (n.driftAmount !== undefined) {
-      const room = Math.min(n.y - n.r - TOP, BOTTOM - n.y - n.r);
-      n.driftAmount = Math.max(15, Math.min(n.driftAmount, room));
-    }
+const nodes = [];
+CLUSTERS.forEach((c, ci) => {
+  c.phase = ci * 1.3;
+  c.hub = nodes.length;
+  nodes.push({ x: c.cx, y: c.cy, r: 22, cat: c.cat, cluster: ci, hub: true });
+  c.sats.forEach(([deg, dist], si) => {
+    const a = deg * Math.PI / 180;
+    nodes.push({ x: c.cx + Math.cos(a) * dist, y: c.cy + Math.sin(a) * dist,
+                 r: 13 + ((ci + si) % 3) * 2, cat: c.cat, cluster: ci, hub: false });
   });
-})();
+});
+nodes.forEach((node, i) => {
+  node.color = allColors[i % allColors.length];
+  node.wobbleAmp = node.hub ? 5 : 8 + (i % 4) * 2;     // small, in place
+  node.wobblePhase = (i * 2.399) % (Math.PI * 2);       // golden-angle spread
+  node.wobbleSpeed = 0.18 + (i % 5) * 0.04;            // slow
+});
 const origPos = nodes.map(n => ({...n}));
 const connGroup = document.getElementById('connections');
 const nodesGroup = document.getElementById('nodes');
@@ -1428,67 +1404,49 @@ nodes.forEach((node, i) => {
 });
 
 
-for (let i = 0; i < nodes.length; i++) {
-  for (let j = i + 1; j < nodes.length; j++) {
-    const dx = nodes[i].x - nodes[j].x;
-    const dy = nodes[i].y - nodes[j].y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    let shouldConnect = false;
-    let lineColor = '#000';
-    let lineOpacity = 0.55;
-    let lineWidth = 2.5;
-
-    // Same category nodes: interconnected web
-    if (nodes[i].cat === nodes[j].cat && dist < 280) {
-      shouldConnect = true;
-      lineColor = '#000';
-      lineOpacity = 0.50;
-      lineWidth = 2;
-    }
-    // Different category nodes: minimal cross-connections
-    else if (nodes[i].cat !== nodes[j].cat && dist < 250 && Math.random() > 0.80) {
-      shouldConnect = true;
-      lineColor = '#000';
-      lineOpacity = 0.28;
-      lineWidth = 1.2;
-    }
-
-    if (shouldConnect) {
-      const x1 = nodes[i].x;
-      const y1 = nodes[i].y;
-      const x2 = nodes[j].x;
-      const y2 = nodes[j].y;
-
-      // Calculate control point for curve (creates a smooth arc)
-      const mx = (x1 + x2) / 2;
-      const my = (y1 + y2) / 2;
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const perpx = -dy / dist * 40;
-      const perpy = dx / dist * 40;
-
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      const pathData = `M ${x1} ${y1} Q ${mx + perpx} ${my + perpy} ${x2} ${y2}`;
-      path.setAttribute('d', pathData);
-      path.setAttribute('stroke', lineColor);
-      path.setAttribute('stroke-width', lineWidth);
-      path.setAttribute('opacity', lineOpacity);
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke-linecap', 'round');
-      path.setAttribute('stroke-linejoin', 'round');
-      path.setAttribute('marker-end', lineOpacity > 0.4 ? 'url(#arrowhead)' : 'url(#arrowhead-light)');
-      path.dataset.from = i;
-      path.dataset.to = j;
-      connGroup.appendChild(path);
-    }
-  }
-}
+// Edges: hub-satellite inside each cluster, neighbouring satellites, a loop
+// between the hubs (like a causal loop), and a few satellite bridges.
+const EDGES = [];
+CLUSTERS.forEach(c => {
+  const sats = nodes.map((n, i) => i).filter(i => nodes[i].cluster === nodes[c.hub].cluster && i !== c.hub);
+  sats.forEach(i => EDGES.push([c.hub, i, 'strong']));
+  for (let k = 0; k + 1 < sats.length; k += 2) EDGES.push([sats[k], sats[k + 1], 'light']);
+});
+const hubLoop = [0, 1, 3, 4, 2, 0];   // systems → futures → sustainability → design → participation → systems
+for (let k = 0; k + 1 < hubLoop.length; k++) EDGES.push([CLUSTERS[hubLoop[k]].hub, CLUSTERS[hubLoop[k + 1]].hub, 'loop']);
+[[0, 2], [1, 2], [3, 2], [2, 4], [1, 3]].forEach(([ca, cb], k) => {
+  // bridge from the satellite of cluster ca closest to cluster cb
+  const target = CLUSTERS[cb];
+  let best = -1, bd = 1e9;
+  nodes.forEach((n, i) => { if (n.cluster === ca && !n.hub) { const d = Math.hypot(n.x - target.cx, n.y - target.cy); if (d < bd) { bd = d; best = i; } } });
+  EDGES.push([best, target.hub, 'light']);
+});
+const EDGE_STYLE = { strong: [2, 0.5], loop: [2.2, 0.45], light: [1.2, 0.28] };
+EDGES.forEach(([i, j, kind]) => {
+  const [lineWidth, lineOpacity] = EDGE_STYLE[kind];
+  const x1 = nodes[i].x, y1 = nodes[i].y, x2 = nodes[j].x, y2 = nodes[j].y;
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
+  const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+  const bend = kind === 'loop' ? 60 : 25;
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', `M ${x1} ${y1} Q ${mx - dy / dist * bend} ${my + dx / dist * bend} ${x2} ${y2}`);
+  path.setAttribute('stroke', '#000');
+  path.setAttribute('stroke-width', lineWidth);
+  path.setAttribute('opacity', lineOpacity);
+  path.setAttribute('fill', 'none');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('stroke-linejoin', 'round');
+  path.setAttribute('marker-end', lineOpacity > 0.4 ? 'url(#arrowhead)' : 'url(#arrowhead-light)');
+  path.dataset.from = i;
+  path.dataset.to = j;
+  path.dataset.bend = bend;
+  connGroup.appendChild(path);
+});
 
 const hero = document.getElementById('hero-section');
 let animationTime = 0;
 const affectedByMouse = new Set();
+let hovered = -1;
 
 function animateDrift() {
   animationTime += 0.016;
@@ -1500,13 +1458,15 @@ function animateDrift() {
     // Consistent opacity
     circle.setAttribute('opacity', 0.95);
 
-    if (node.driftAmount !== undefined && !affectedByMouse.has(idx)) {
-      const driftX = Math.sin(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
-      const driftY = Math.cos(animationTime * node.driftSpeed + node.driftPhase) * node.driftAmount;
-      const newX = node.x + driftX;
-      const newY = node.y + driftY;
-      circle.setAttribute('cx', newX);
-      circle.setAttribute('cy', newY);
+    if (!affectedByMouse.has(idx)) {
+      const c = CLUSTERS[node.cluster];
+      const breathe = 1 + 0.06 * Math.sin(animationTime * 0.35 + c.phase);   // ~18 s per breath
+      const bx = c.cx + (node.x - c.cx) * breathe;
+      const by = c.cy + (node.y - c.cy) * breathe;
+      const t = animationTime * node.wobbleSpeed + node.wobblePhase;
+      circle.setAttribute('cx', bx + Math.sin(t) * node.wobbleAmp);
+      circle.setAttribute('cy', by + Math.cos(t * 0.8) * node.wobbleAmp);
+      circle.setAttribute('r', node.r * (idx === hovered ? 1.3 : 1) * (1 + 0.04 * Math.sin(animationTime * 0.5 + node.wobblePhase)));
     }
   });
   const paths = connGroup.querySelectorAll('path');
@@ -1527,8 +1487,9 @@ function animateDrift() {
       const dx = x2 - x1;
       const dy = y2 - y1;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const perpx = dist > 0 ? -dy / dist * 40 : 0;
-      const perpy = dist > 0 ? dx / dist * 40 : 0;
+      const bend = parseFloat(path.dataset.bend) || 40;
+      const perpx = dist > 0 ? -dy / dist * bend : 0;
+      const perpy = dist > 0 ? dx / dist * bend : 0;
 
       const pathData = `M ${x1} ${y1} Q ${mx + perpx} ${my + perpy} ${x2} ${y2}`;
       path.setAttribute('d', pathData);
@@ -1540,54 +1501,50 @@ function animateDrift() {
 
 animateDrift();
 
-document.addEventListener('mousemove', (e) => {
-  const rect = hero.getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const my = e.clientY - rect.top;
-  
-  if (mx < 0 || mx > rect.width || my < 0 || my > rect.height) return;
+// Hover: the ball under the cursor grows slightly, catches a glossy
+// highlight that follows the cursor (as if reflecting it), and its links darken.
+const svgEl = document.getElementById('hero-svg');
+const NS = 'http://www.w3.org/2000/svg';
+const shine = document.createElementNS(NS, 'radialGradient');
+shine.setAttribute('id', 'ball-shine');
+shine.setAttribute('cx', '0.5'); shine.setAttribute('cy', '0.5'); shine.setAttribute('r', '0.6');
+[['0', '#ffffff'], ['0.22', '#ffffff'], ['0.55', '#ffe45c'], ['0.85', '#e0a800'], ['1', '#9c7200']].forEach(([o, c]) => {
+  const st = document.createElementNS(NS, 'stop'); st.setAttribute('offset', o); st.setAttribute('stop-color', c); shine.appendChild(st);
+});
+svgEl.querySelector('defs').appendChild(shine);
 
-  affectedByMouse.clear();
-  const circles = nodesGroup.querySelectorAll('circle');
-  circles.forEach(circle => {
-    const idx = parseInt(circle.dataset.idx);
-    const n = nodes[idx];
-    const dx = mx - n.x;
-    const dy = my - n.y;
-    const d = Math.sqrt(dx * dx + dy * dy);
-
-    if (d < 150) {
-      affectedByMouse.add(idx);
-      const angle = Math.atan2(dy, dx);
-      const force = (1 - d / 150) * 1.5;
-      circle.setAttribute('cx', n.x - Math.cos(angle) * force);
-      circle.setAttribute('cy', n.y - Math.sin(angle) * force);
+function toSvg(e) {
+  const pt = svgEl.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+  const m = svgEl.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : null;
+}
+function setHover(idx) {
+  if (idx === hovered) return;
+  hovered = idx;
+  nodesGroup.querySelectorAll('circle').forEach((c, i) => c.setAttribute('fill', i === idx ? 'url(#ball-shine)' : '#fff'));
+  connGroup.querySelectorAll('path').forEach(p => {
+    const on = idx >= 0 && (+p.dataset.from === idx || +p.dataset.to === idx);
+    if (!p.dataset.baseW) { p.dataset.baseW = p.getAttribute('stroke-width'); p.dataset.baseO = p.getAttribute('opacity'); }
+    p.setAttribute('stroke-width', on ? 3 : p.dataset.baseW);
+    p.setAttribute('opacity', on ? 0.9 : (idx >= 0 ? p.dataset.baseO * 0.6 : p.dataset.baseO));
+  });
+  svgEl.style.cursor = idx >= 0 ? 'pointer' : '';
+}
+svgEl.addEventListener('mousemove', (e) => {
+  const p = toSvg(e); if (!p) return;
+  let found = -1;
+  nodesGroup.querySelectorAll('circle').forEach((c, i) => {
+    const dx = p.x - parseFloat(c.getAttribute('cx')), dy = p.y - parseFloat(c.getAttribute('cy'));
+    if (Math.hypot(dx, dy) < parseFloat(c.getAttribute('r')) * 1.6) {
+      found = i;
+      // move the highlight toward the cursor, like a reflection on a glossy ball
+      const r = parseFloat(c.getAttribute('r')) * 1.6;
+      shine.setAttribute('fx', (0.5 + Math.max(-0.35, Math.min(0.35, dx / r * 0.5))).toFixed(3));
+      shine.setAttribute('fy', (0.5 + Math.max(-0.35, Math.min(0.35, dy / r * 0.5))).toFixed(3));
     }
   });
-
-  const paths = connGroup.querySelectorAll('path');
-  paths.forEach(path => {
-    const from = parseInt(path.dataset.from);
-    const to = parseInt(path.dataset.to);
-    const c1 = nodesGroup.querySelectorAll('circle')[from];
-    const c2 = nodesGroup.querySelectorAll('circle')[to];
-    const x1 = parseFloat(c1.getAttribute('cx'));
-    const y1 = parseFloat(c1.getAttribute('cy'));
-    const x2 = parseFloat(c2.getAttribute('cx'));
-    const y2 = parseFloat(c2.getAttribute('cy'));
-
-    const mx = (x1 + x2) / 2;
-    const my = (y1 + y2) / 2;
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const perpx = dist > 0 ? -dy / dist * 40 : 0;
-    const perpy = dist > 0 ? dx / dist * 40 : 0;
-
-    const pathData = `M ${x1} ${y1} Q ${mx + perpx} ${my + perpy} ${x2} ${y2}`;
-    path.setAttribute('d', pathData);
-  });
+  setHover(found);
 });
+svgEl.addEventListener('mouseleave', () => setHover(-1));
 
 hero.addEventListener('mouseleave', () => {
   affectedByMouse.clear();
