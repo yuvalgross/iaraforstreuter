@@ -233,7 +233,6 @@
   }
 
   .project-card:hover {
-    transform: translateY(-8px);
     border-color: #FFD700;
   }
 
@@ -487,7 +486,7 @@
   }
   .project-cover { position: absolute; inset: 0; z-index: 2; border-radius: 16px; }
   .project-cover:focus-visible { outline: 2px solid #FFD700; outline-offset: 6px; }
-  .project-with-illustration:hover .project-card { border-color: #FFD700; transform: translateY(-8px); }
+  .project-with-illustration:hover .project-card { border-color: #FFD700; }
   .project-with-illustration:hover .project-link span { margin-left: 4px; }
   .project-link span { transition: margin 0.2s ease; }
 
@@ -662,33 +661,15 @@
     height: 78%;
   }
 
-  /* Card hover: the illustration follows the cursor (3D tilt + drift),
-     lifts, glows, and keeps a gentle sway underneath */
-  .project-illustration-wrapper { perspective: 900px; }
+  /* Card hover: no movement, only a yellow glow that comes from the cursor's side */
   .project-illustration-wrapper svg {
-    --tx: 0px; --ty: 0px; --rx: 0deg; --ry: 0deg; --gx: 0px; --gy: 0px; --lift: 0px; --s: 1;
-    transform: translate(var(--tx), calc(var(--ty) - var(--lift))) rotateX(var(--rx)) rotateY(var(--ry)) scale(var(--s));
+    --gx: 0px; --gy: 0px;
     filter: drop-shadow(var(--gx) var(--gy) 0 rgba(255, 215, 0, 0));
-    transition: transform 0.7s cubic-bezier(.2,.7,.2,1), filter 0.6s ease;
-    transform-origin: 50% 50%;
-    will-change: transform;
+    transition: filter 0.4s ease;
   }
   .project-with-illustration.tilting .project-illustration-wrapper svg {
-    --lift: 8px; --s: 1.07;
-    transition: transform 0.18s ease-out, filter 0.3s ease;
-    filter: drop-shadow(var(--gx) var(--gy) 14px rgba(255, 215, 0, 0.4));
-    animation: card-sway 4s ease-in-out infinite;
-  }
-  @keyframes card-sway {
-    0%, 100% { rotate: 0deg;    translate: 0 0; }
-    25%      { rotate: -1.5deg; translate: 0 -4px; }
-    75%      { rotate: 1.5deg;  translate: 0 3px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .project-with-illustration.tilting .project-illustration-wrapper svg {
-      --tx: 0px !important; --ty: 0px !important; --rx: 0deg !important; --ry: 0deg !important; --lift: 0px; --s: 1;
-      animation: none;
-    }
+    filter: drop-shadow(var(--gx) var(--gy) 14px rgba(255, 215, 0, 0.45));
+    transition: filter 0.25s ease;
   }
 
   /* Tablet: keep two columns, tighter */
@@ -1736,7 +1717,7 @@ if (workSvg) {
 })();
 </script>
 <script>
-// Card illustrations follow the cursor: tilt toward it, drift after it, glow from its side.
+// Card illustrations: a yellow glow that follows the cursor (no movement).
 (function () {
   if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
   document.querySelectorAll('.project-with-illustration').forEach(tile => {
@@ -1745,12 +1726,8 @@ if (workSvg) {
     let raf = 0, nx = 0, ny = 0;
     const apply = () => {
       raf = 0;
-      svg.style.setProperty('--tx', (nx * 16).toFixed(1) + 'px');
-      svg.style.setProperty('--ty', (ny * 12).toFixed(1) + 'px');
-      svg.style.setProperty('--ry', (nx * 14).toFixed(1) + 'deg');
-      svg.style.setProperty('--rx', (-ny * 12).toFixed(1) + 'deg');
-      svg.style.setProperty('--gx', (-nx * 10).toFixed(1) + 'px');
-      svg.style.setProperty('--gy', (-ny * 10).toFixed(1) + 'px');
+      svg.style.setProperty('--gx', (nx * 10).toFixed(1) + 'px');
+      svg.style.setProperty('--gy', (ny * 10).toFixed(1) + 'px');
     };
     tile.addEventListener('mouseenter', () => tile.classList.add('tilting'));
     tile.addEventListener('mousemove', e => {
