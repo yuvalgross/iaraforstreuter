@@ -1301,6 +1301,20 @@ nodes.forEach(node => {
   }
 });
 
+// Keep the network inside the visible area: the wave divider covers the
+// bottom of the drawing, so fit the nodes between y=110 and y=470 and cap
+// each node's drift so it never goes above TOP or below BOTTOM.
+(function keepInView() {
+  const TOP = 40, BOTTOM = 580;
+  const ys = nodes.map(n => n.y), minY = Math.min(...ys), maxY = Math.max(...ys);
+  nodes.forEach(n => {
+    n.y = 110 + (n.y - minY) * (470 - 110) / (maxY - minY);
+    if (n.driftAmount !== undefined) {
+      const room = Math.min(n.y - n.r - TOP, BOTTOM - n.y - n.r);
+      n.driftAmount = Math.max(15, Math.min(n.driftAmount, room));
+    }
+  });
+})();
 const origPos = nodes.map(n => ({...n}));
 const connGroup = document.getElementById('connections');
 const nodesGroup = document.getElementById('nodes');
