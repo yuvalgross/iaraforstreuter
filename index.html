@@ -592,6 +592,24 @@
   .contact-meta a { color: #ccc; text-decoration: none; border-bottom: 1px solid transparent; }
   .contact-meta a:hover { color: #FFD700; border-bottom-color: #FFD700; }
 
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2rem; }
+  .contact-actions .contact-link { margin-top: 0; }
+  .contact-link.secondary { border-color: #fff; color: #fff; }
+  .contact-link.secondary:hover { background: #fff; color: #000; }
+  .portfolio-button {
+    display: inline-flex; flex-direction: column; gap: 2px;
+    margin-top: 0.75rem;
+    padding: 14px 24px;
+    background: #000; color: #FFD700;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600; font-size: 15px; letter-spacing: 0.5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .portfolio-button .pb-meta { font-size: 12px; font-weight: 500; color: #fff; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; }
+  .portfolio-button:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+  .portfolio-button:focus-visible { outline: 2px solid #000; outline-offset: 3px; }
+
   /* Tablet: keep two columns, tighter */
   @media (max-width: 900px) {
     .portfolio-grid {
@@ -1265,6 +1283,10 @@
       <p>A strong connection to nature shaped my childhood in Suva, Fiji. Weekly boat trips to the reef for snorkeling gave me a deep bond with the sea, and it was there that I also saw the harmful effects of climate change and pollution. When I moved to Rio de Janeiro at thirteen, I was introduced to many new customs and ways of life.</p>
       <p>Growing up between cultures and adapting to constant change has had a tremendous impact on me. It changed how I see the world and the people in it. A constant has been my interest in finding what different cultures share, and my fascination with innovation.</p>
       <p>Innovation and empathy drive my work. I use my intercultural experience to create better solutions for a broad audience, and I believe that bridging different knowledge systems can help create a more sustainable future.</p>
+      <a href="files/Iara_Forstreuter_Workshop_Portfolio.pdf" class="portfolio-button" target="_blank" rel="noopener">
+        <span>Workshop &amp; Facilitation Portfolio</span>
+        <span class="pb-meta">Open PDF &middot; 6 pages &nearr;</span>
+      </a>
     </div>
   </div>
   <div class="about-band">
@@ -1280,13 +1302,14 @@
   <div class="wrap">
     <h2>Let's collaborate</h2>
     <p>Currently seeking new opportunities in design and systemic thinking</p>
-    <a href="mailto:iaraforstreuter1@gmail.com" class="contact-link">Get in Touch</a>
+    <div class="contact-actions">
+      <a href="mailto:iaraforstreuter1@gmail.com" class="contact-link">Get in Touch</a>
+      <a href="files/Iara_Forstreuter_Workshop_Portfolio.pdf" class="contact-link secondary" target="_blank" rel="noopener">Workshop Portfolio &nearr;</a>
+    </div>
     <p class="contact-meta">
       <a href="mailto:iaraforstreuter1@gmail.com">iaraforstreuter1@gmail.com</a>
       <span aria-hidden="true">&bull;</span>
       <a href="https://www.linkedin.com/in/iara-forstreuter/" target="_blank" rel="noopener">LinkedIn</a>
-      <span aria-hidden="true">&bull;</span>
-      <a href="files/Iara_Forstreuter_Workshop_Portfolio.pdf" target="_blank" rel="noopener">Workshop portfolio (PDF)</a>
     </p>
   </div>
 </section>
