@@ -1352,38 +1352,38 @@
 <script>
 const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C00'];
 
-// System-map layout: five clusters spread across the drawing, each a hub
-// with satellites around it. Positions are fixed so the map reads the same
-// on every visit; motion is a slow per-cluster "breathing" plus a small wobble.
-const CLUSTERS = [
-  { cat: 'systems',        cx: 215,  cy: 290, n: 5, start: -80 },
-  { cat: 'futures',        cx: 500,  cy: 185, n: 4, start: -20 },
-  { cat: 'participation',  cx: 715,  cy: 400, n: 5, start: -65 },
-  { cat: 'sustainability', cx: 935,  cy: 185, n: 4, start: 15 },
-  { cat: 'design',         cx: 1185, cy: 310, n: 5, start: -100 },
+// Causal-loop map layout, after Kumu-style system maps: a central "deep
+// structure" loop of larger nodes, surrounded by smaller feedback loops.
+// Nodes sit on rings and are linked around each ring by arcs that follow
+// the circle; long sweeping curves connect the outer loops to the core.
+const LOOPS = [
+  { name: 'core',           cx: 700,  cy: 300, R: 120, n: 6, r: 21, start: -90, core: true },
+  { name: 'systems',        cx: 245,  cy: 235, R: 85,  n: 5, r: 13, start: -60 },
+  { name: 'futures',        cx: 455,  cy: 110, R: 62,  n: 4, r: 12, start: -45 },
+  { name: 'sustainability', cx: 990,  cy: 115, R: 72,  n: 5, r: 12, start: -20 },
+  { name: 'design',         cx: 1235, cy: 270, R: 88,  n: 5, r: 13, start: 10 },
+  { name: 'participation',  cx: 1005, cy: 445, R: 80,  n: 5, r: 12, start: 30 },
+  { name: 'learning',       cx: 365,  cy: 440, R: 78,  n: 4, r: 12, start: 20 },
 ];
-// satellites evenly spread around each hub, alternating near/far
-CLUSTERS.forEach(c => {
-  c.sats = [];
-  for (let k = 0; k < c.n; k++) c.sats.push([c.start + k * 360 / c.n + (k % 2 ? 12 : -8), k % 2 ? 125 : 100]);
-});
 const nodes = [];
-CLUSTERS.forEach((c, ci) => {
-  c.phase = ci * 1.3;
-  c.hub = nodes.length;
-  nodes.push({ x: c.cx, y: c.cy, r: 22, cat: c.cat, cluster: ci, hub: true });
-  c.sats.forEach(([deg, dist], si) => {
-    const a = deg * Math.PI / 180;
-    nodes.push({ x: c.cx + Math.cos(a) * dist, y: c.cy + Math.sin(a) * dist,
-                 r: 13 + ((ci + si) % 3) * 2, cat: c.cat, cluster: ci, hub: false });
-  });
+LOOPS.forEach((L, li) => {
+  L.phase = li * 1.7;
+  L.members = [];
+  for (let k = 0; k < L.n; k++) {
+    const ang = (L.start + k * 360 / L.n) * Math.PI / 180;
+    L.members.push(nodes.length);
+    nodes.push({ x: L.cx + Math.cos(ang) * L.R, y: L.cy + Math.sin(ang) * L.R,
+                 r: L.r + ((k * 7 + li) % 3) * (L.core ? 2 : 1.5), loop: li, core: !!L.core });
+  }
 });
 nodes.forEach((node, i) => {
   node.color = allColors[i % allColors.length];
-  node.wobbleAmp = node.hub ? 5 : 8 + (i % 4) * 2;     // small, in place
-  node.wobblePhase = (i * 2.399) % (Math.PI * 2);       // golden-angle spread
-  node.wobbleSpeed = 0.18 + (i % 5) * 0.04;            // slow
+  node.wobbleAmp = 3 + (i % 3);                        // tiny, in place
+  node.wobblePhase = (i * 2.399) % (Math.PI * 2);
+  node.wobbleSpeed = 0.15 + (i % 5) * 0.03;
 });
+// current (animated) positions, used by nodes, edges and hover
+const cur = nodes.map(n => ({ x: n.x, y: n.y }));
 const origPos = nodes.map(n => ({...n}));
 const connGroup = document.getElementById('connections');
 const nodesGroup = document.getElementById('nodes');
@@ -1395,8 +1395,8 @@ nodes.forEach((node, i) => {
   circle.setAttribute('r', node.r);
   circle.setAttribute('fill', '#fff');
   circle.setAttribute('stroke', '#000');
-  circle.setAttribute('stroke-width', '2.5');
-  circle.setAttribute('opacity', '0.85');
+  circle.setAttribute('stroke-width', node.core ? '2.2' : '1.6');
+  circle.setAttribute('opacity', '1');
   circle.dataset.idx = i;
   node.pulsePhase = Math.random() * Math.PI * 2;
   node.pulseSpeed = Math.random() * 0.035 + 0.015;
@@ -1404,42 +1404,66 @@ nodes.forEach((node, i) => {
 });
 
 
-// Edges: hub-satellite inside each cluster, neighbouring satellites, a loop
-// between the hubs (like a causal loop), and a few satellite bridges.
+// Edges. 'ring' arcs run around each loop and close it (feedback loop);
+// 'link' curves sweep between loops; 'cross' is a chord inside the core.
 const EDGES = [];
-CLUSTERS.forEach(c => {
-  const sats = nodes.map((n, i) => i).filter(i => nodes[i].cluster === nodes[c.hub].cluster && i !== c.hub);
-  sats.forEach(i => EDGES.push([c.hub, i, 'strong']));
-  for (let k = 0; k + 1 < sats.length; k += 2) EDGES.push([sats[k], sats[k + 1], 'light']);
+LOOPS.forEach((L, li) => L.members.forEach((m, k) =>
+  EDGES.push({ a: m, b: L.members[(k + 1) % L.n], kind: L.core ? 'core' : 'ring', loop: li })));
+const nearest = (fromLoop, toLoop) => {
+  let best = [0, 0], bd = 1e9;
+  LOOPS[fromLoop].members.forEach(i => LOOPS[toLoop].members.forEach(j => {
+    const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y); if (d < bd) { bd = d; best = [i, j]; } }));
+  return best;
+};
+// every outer loop feeds the core; a few loops also feed each other
+[[1, 0, 1], [2, 0, -1], [3, 0, 1], [4, 0, -1], [5, 0, 1], [6, 0, -1],
+ [0, 5, 1], [0, 1, -1], [2, 1, 1], [3, 4, -1], [6, 5, 1], [2, 3, 1]].forEach(([f, t, side]) => {
+  const [i, j] = nearest(f, t); EDGES.push({ a: i, b: j, kind: 'link', side });
 });
-const hubLoop = [0, 1, 3, 4, 2, 0];   // systems → futures → sustainability → design → participation → systems
-for (let k = 0; k + 1 < hubLoop.length; k++) EDGES.push([CLUSTERS[hubLoop[k]].hub, CLUSTERS[hubLoop[k + 1]].hub, 'loop']);
-[[0, 2], [1, 2], [3, 2], [2, 4], [1, 3]].forEach(([ca, cb], k) => {
-  // bridge from the satellite of cluster ca closest to cluster cb
-  const target = CLUSTERS[cb];
-  let best = -1, bd = 1e9;
-  nodes.forEach((n, i) => { if (n.cluster === ca && !n.hub) { const d = Math.hypot(n.x - target.cx, n.y - target.cy); if (d < bd) { bd = d; best = i; } } });
-  EDGES.push([best, target.hub, 'light']);
-});
-const EDGE_STYLE = { strong: [2, 0.5], loop: [2.2, 0.45], light: [1.2, 0.28] };
-EDGES.forEach(([i, j, kind]) => {
-  const [lineWidth, lineOpacity] = EDGE_STYLE[kind];
-  const x1 = nodes[i].x, y1 = nodes[i].y, x2 = nodes[j].x, y2 = nodes[j].y;
-  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1;
-  const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-  const bend = kind === 'loop' ? 60 : 25;
+// long sweeping curves across the map
+EDGES.push({ a: LOOPS[1].members[0], b: LOOPS[3].members[2], kind: 'sweep', side: -1 });
+EDGES.push({ a: LOOPS[6].members[1], b: LOOPS[4].members[2], kind: 'sweep', side: 1 });
+EDGES.push({ a: LOOPS[0].members[0], b: LOOPS[0].members[3], kind: 'cross', side: 1 });
+
+const EDGE_STYLE = { core: [2.3, 0.6], ring: [1.8, 0.5], link: [1.5, 0.42], sweep: [1.1, 0.26], cross: [1.4, 0.3] };
+function loopCenter(li) {
+  const L = LOOPS[li]; let x = 0, y = 0;
+  L.members.forEach(m => { x += cur[m].x; y += cur[m].y; });
+  return [x / L.n, y / L.n];
+}
+function edgePath(e) {
+  const p = cur[e.a], q = cur[e.b];
+  const mx = (p.x + q.x) / 2, my = (p.y + q.y) / 2, dx = q.x - p.x, dy = q.y - p.y;
+  const len = Math.hypot(dx, dy) || 1;
+  let cx, cy;
+  if (e.kind === 'ring' || e.kind === 'core') {
+    // bulge away from the loop centre so the arc follows the circle
+    const [lx, ly] = loopCenter(e.loop);
+    let ux = mx - lx, uy = my - ly; const ul = Math.hypot(ux, uy) || 1; ux /= ul; uy /= ul;
+    const k = 0.33 * len;
+    cx = mx + ux * k; cy = my + uy * k;
+  } else {
+    const k = (e.kind === 'sweep' ? 0.35 : e.kind === 'cross' ? 0.15 : 0.28) * len * (e.side || 1);
+    cx = mx - dy / len * k; cy = my + dx / len * k;
+  }
+  // stop the line at the edge of the target ball so the arrow head shows
+  const rr = parseFloat(nodesGroup.children[e.b].getAttribute('r')) + 3;
+  const tx = q.x - cx, ty = q.y - cy, tl = Math.hypot(tx, ty) || 1;
+  return `M ${p.x.toFixed(1)} ${p.y.toFixed(1)} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${(q.x - tx / tl * rr).toFixed(1)} ${(q.y - ty / tl * rr).toFixed(1)}`;
+}
+EDGES.forEach((e, ei) => {
+  const [lineWidth, lineOpacity] = EDGE_STYLE[e.kind];
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', `M ${x1} ${y1} Q ${mx - dy / dist * bend} ${my + dx / dist * bend} ${x2} ${y2}`);
   path.setAttribute('stroke', '#000');
   path.setAttribute('stroke-width', lineWidth);
   path.setAttribute('opacity', lineOpacity);
   path.setAttribute('fill', 'none');
   path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('stroke-linejoin', 'round');
-  path.setAttribute('marker-end', lineOpacity > 0.4 ? 'url(#arrowhead)' : 'url(#arrowhead-light)');
-  path.dataset.from = i;
-  path.dataset.to = j;
-  path.dataset.bend = bend;
+  path.setAttribute('marker-end', lineOpacity >= 0.42 ? 'url(#arrowhead)' : 'url(#arrowhead-light)');
+  path.dataset.from = e.a;
+  path.dataset.to = e.b;
+  path.dataset.edge = ei;
+  path.setAttribute('d', edgePath(e));
   connGroup.appendChild(path);
 });
 
@@ -1450,52 +1474,28 @@ let hovered = -1;
 
 function animateDrift() {
   animationTime += 0.016;
-  const circles = nodesGroup.querySelectorAll('circle');
-  
-  circles.forEach((circle, idx) => {
-    const node = nodes[idx];
-
-    // Consistent opacity
-    circle.setAttribute('opacity', 0.95);
-
-    if (!affectedByMouse.has(idx)) {
-      const c = CLUSTERS[node.cluster];
-      const breathe = 1 + 0.06 * Math.sin(animationTime * 0.35 + c.phase);   // ~18 s per breath
-      const bx = c.cx + (node.x - c.cx) * breathe;
-      const by = c.cy + (node.y - c.cy) * breathe;
-      const t = animationTime * node.wobbleSpeed + node.wobblePhase;
-      circle.setAttribute('cx', bx + Math.sin(t) * node.wobbleAmp);
-      circle.setAttribute('cy', by + Math.cos(t * 0.8) * node.wobbleAmp);
-      circle.setAttribute('r', node.r * (idx === hovered ? 1.3 : 1) * (1 + 0.04 * Math.sin(animationTime * 0.5 + node.wobblePhase)));
-    }
+  const t = animationTime;
+  const circles = nodesGroup.children;
+  // each loop breathes (scales), sways (small rotation) and drifts a little
+  LOOPS.forEach((L, li) => {
+    const s = 1 + (L.core ? 0.035 : 0.06) * Math.sin(t * 0.3 + L.phase);          // ~20 s per breath
+    const rot = (L.core ? 0.02 : 0.05) * Math.sin(t * 0.11 + L.phase);            // gentle sway
+    const ox = 6 * Math.sin(t * 0.07 + L.phase), oy = 5 * Math.cos(t * 0.09 + L.phase);
+    const cr = Math.cos(rot), sr = Math.sin(rot);
+    L.members.forEach(i => {
+      const n = nodes[i], dx = (n.x - L.cx) * s, dy = (n.y - L.cy) * s;
+      const w = t * n.wobbleSpeed + n.wobblePhase;
+      cur[i].x = L.cx + ox + dx * cr - dy * sr + Math.sin(w) * n.wobbleAmp;
+      cur[i].y = L.cy + oy + dx * sr + dy * cr + Math.cos(w * 0.8) * n.wobbleAmp;
+    });
   });
-  const paths = connGroup.querySelectorAll('path');
-  paths.forEach(path => {
-    const from = parseInt(path.dataset.from);
-    const to = parseInt(path.dataset.to);
-    const c1 = circles[from];
-    const c2 = circles[to];
-    if (c1 && c2) {
-      const x1 = parseFloat(c1.getAttribute('cx'));
-      const y1 = parseFloat(c1.getAttribute('cy'));
-      const x2 = parseFloat(c2.getAttribute('cx'));
-      const y2 = parseFloat(c2.getAttribute('cy'));
-
-      // Update curve with new positions
-      const mx = (x1 + x2) / 2;
-      const my = (y1 + y2) / 2;
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const bend = parseFloat(path.dataset.bend) || 40;
-      const perpx = dist > 0 ? -dy / dist * bend : 0;
-      const perpy = dist > 0 ? dx / dist * bend : 0;
-
-      const pathData = `M ${x1} ${y1} Q ${mx + perpx} ${my + perpy} ${x2} ${y2}`;
-      path.setAttribute('d', pathData);
-    }
-  });
-  
+  for (let i = 0; i < nodes.length; i++) {
+    const c = circles[i], n = nodes[i];
+    c.setAttribute('cx', cur[i].x.toFixed(1));
+    c.setAttribute('cy', cur[i].y.toFixed(1));
+    c.setAttribute('r', (n.r * (i === hovered ? 1.3 : 1) * (1 + 0.04 * Math.sin(t * 0.5 + n.wobblePhase))).toFixed(2));
+  }
+  connGroup.querySelectorAll('path').forEach(p => p.setAttribute('d', edgePath(EDGES[+p.dataset.edge])));
   requestAnimationFrame(animateDrift);
 }
 
@@ -1546,35 +1546,6 @@ svgEl.addEventListener('mousemove', (e) => {
 });
 svgEl.addEventListener('mouseleave', () => setHover(-1));
 
-hero.addEventListener('mouseleave', () => {
-  affectedByMouse.clear();
-  const circles = nodesGroup.querySelectorAll('circle');
-  circles.forEach((c, i) => {
-    c.setAttribute('cx', origPos[i].x);
-    c.setAttribute('cy', origPos[i].y);
-  });
-  
-  const paths = connGroup.querySelectorAll('path');
-  paths.forEach(path => {
-    const from = parseInt(path.dataset.from);
-    const to = parseInt(path.dataset.to);
-    const x1 = origPos[from].x;
-    const y1 = origPos[from].y;
-    const x2 = origPos[to].x;
-    const y2 = origPos[to].y;
-
-    const mx = (x1 + x2) / 2;
-    const my = (y1 + y2) / 2;
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const perpx = dist > 0 ? -dy / dist * 40 : 0;
-    const perpy = dist > 0 ? dx / dist * 40 : 0;
-
-    const pathData = `M ${x1} ${y1} Q ${mx + perpx} ${my + perpy} ${x2} ${y2}`;
-    path.setAttribute('d', pathData);
-  });
-});
 
 // Simple fade-in effect for decorative elements as they scroll into view
 const decorativeElements = document.querySelectorAll('.decorative-element');
