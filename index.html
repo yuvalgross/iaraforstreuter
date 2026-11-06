@@ -547,11 +547,17 @@
   }
 
   /* Expertise / Tools / Methodologies: one even strip under the bio */
+  .about-band {
+    background: #FFD700;
+    color: #000;
+    margin: clamp(56px, 7vw, 88px) calc(-1 * var(--gutter)) 0;
+    padding: clamp(40px, 5vw, 64px) var(--gutter);
+  }
+  .about-band .about-group h3 { color: #000; }
+  .about-band .chips li { border-color: rgba(0,0,0,0.75); color: #000; }
   .about-strip {
     max-width: var(--container);
-    margin: clamp(48px, 6vw, 72px) auto 0;
-    padding-top: clamp(32px, 4vw, 48px);
-    border-top: 1px solid rgba(255,255,255,0.15);
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 2fr 2fr 4fr;
     gap: 1rem clamp(16px, 2vw, 28px);
@@ -1233,10 +1239,12 @@
       <p>Innovation and empathy drive my work. I use my intercultural experience to create better solutions for a broad audience, and I believe that bridging different knowledge systems can help create a more sustainable future.</p>
     </div>
   </div>
+  <div class="about-band">
   <div class="about-strip">
     <div class="about-group" style="--n:2"><h3>Expertise</h3><ul class="chips"><li>System Design</li><li>UX/UI</li><li>Industrial Design</li><li>Illustration</li><li>Visualisation</li><li>Prototyping</li><li>Sustainability</li></ul></div>
     <div class="about-group" style="--n:2"><h3>Tools</h3><ul class="chips"><li>Figma</li><li>Adobe Illustrator</li><li>Photoshop</li><li>InDesign</li><li>Rhinoceros</li><li>3D printing</li><li>Laser cutting</li></ul></div>
     <div class="about-group" style="--n:4"><h3>Methodologies</h3><ul class="chips"><li>Systems thinking</li><li>System mapping</li><li>Iceberg model</li><li>Behaviour over time</li><li>Connecting circles</li><li>STEEP analysis</li><li>PACT</li><li>Stakeholder mapping</li><li>Futures thinking</li><li>Design thinking</li><li>Universal design thinking</li><li>Ethnographic fieldwork</li><li>User interviews</li><li>User journey mapping</li><li>Personas</li><li>Usability testing</li></ul></div>
+  </div>
   </div>
 </section>
 
