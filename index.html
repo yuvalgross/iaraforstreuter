@@ -1553,7 +1553,6 @@ function setHover(idx) {
     p.setAttribute('stroke-width', on ? 3 : p.dataset.baseW);
     p.setAttribute('opacity', on ? 0.9 : (idx >= 0 ? p.dataset.baseO * 0.6 : p.dataset.baseO));
   });
-  svgEl.style.cursor = idx >= 0 ? 'pointer' : '';
 }
 svgEl.addEventListener('mousemove', (e) => {
   const p = toSvg(e); if (!p) return;
