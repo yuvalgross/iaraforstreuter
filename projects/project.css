@@ -116,6 +116,8 @@ img { display: block; max-width: 100%; height: auto; }
 .grid.photos img { object-fit: cover; }
 .grid.photos.portrait img { aspect-ratio: 3 / 4; }
 .grid.photos.landscape img { aspect-ratio: 4 / 3; }
+.grid.photos.painting img { aspect-ratio: 1.42 / 1; }
+.grid.photos.page img { aspect-ratio: 1 / 1.414; }
 .extlink { display: block; position: relative; }
 .extlink::after {
   content: 'Open \2197';
@@ -182,7 +184,7 @@ footer {
   .grid, .grid.three { grid-template-columns: minmax(0, 1fr); }
   .grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .grid.photos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grid.photos.landscape { grid-template-columns: minmax(0, 1fr); }
+  .grid.photos.landscape, .grid.photos.painting { grid-template-columns: minmax(0, 1fr); }
   .body p, .body ul, .body ol { font-size: 16px; }
   .hero-image { max-height: 280px; }
 }
