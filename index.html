@@ -483,10 +483,11 @@
 
   /* About */
   .about {
-    background: #2a2a2a;
-    color: #fff;
-    padding: var(--section-space) var(--gutter) 0;
+    background: #FFD700;
+    color: #000;
+    padding: var(--section-space) var(--gutter);
   }
+  .about .section-title { color: #000; }
   .about .wrap {
     max-width: var(--container);
     margin: 0 auto;
@@ -501,10 +502,10 @@
     object-fit: cover;
     border-radius: 12px;
     display: block;
-    background: #333;
+    background: rgba(0,0,0,0.08);
   }
   .about-text p {
-    color: #ddd;
+    color: #1a1a1a;
     font-size: 17px;
     line-height: 1.8;
     margin-bottom: 1.25rem;
@@ -548,10 +549,10 @@
 
   /* Expertise / Tools / Methodologies: one even strip under the bio */
   .about-band {
-    background: #FFD700;
-    color: #000;
-    margin: clamp(56px, 7vw, 88px) calc(-1 * var(--gutter)) 0;
-    padding: clamp(40px, 5vw, 64px) var(--gutter);
+    max-width: var(--container);
+    margin: clamp(48px, 6vw, 72px) auto 0;
+    padding-top: clamp(32px, 4vw, 48px);
+    border-top: 1px solid rgba(0,0,0,0.25);
   }
   .about-band .about-group h3 { color: #000; }
   .about-band .chips li { border-color: rgba(0,0,0,0.75); color: #000; }
