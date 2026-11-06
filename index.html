@@ -232,8 +232,12 @@
     background: transparent;
   }
 
-  .project-card:hover {
+  .project-category { transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
+  .project-card:hover .project-category,
+  .project-with-illustration:hover .project-category {
+    background: #FFD700;
     border-color: #FFD700;
+    color: #000;
   }
 
   .project-content {
@@ -486,7 +490,6 @@
   }
   .project-cover { position: absolute; inset: 0; z-index: 2; border-radius: 16px; }
   .project-cover:focus-visible { outline: 2px solid #FFD700; outline-offset: 6px; }
-  .project-with-illustration:hover .project-card { border-color: #FFD700; }
   .project-with-illustration:hover .project-link span { margin-left: 4px; }
   .project-link span { transition: margin 0.2s ease; }
 
