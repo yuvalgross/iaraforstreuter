@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilibili | Iara Forstreuter</title>
+<meta name="description" content="A natural, ecological water filter that is also a public space">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+<nav class="nav-sticky">
+  <a class="nav-brand" href="../index.html">Iara Forstreuter</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+<header class="project-hero">
+  <a class="back" href="../index.html#work">&larr; All projects</a>
+  <div><span class="pill">Bilibili</span></div>
+  <h1>A natural, ecological water filter that is also a public space</h1>
+  <ul class="meta"><li>Industrial Design</li><li>Bachelor project</li><li>HTW Berlin 2019/20</li></ul>
+</header>
+<img class="hero-image" src="https://static.wixstatic.com/media/7d88fb_050fc382035146cb8ea232571f63cb59~mv2.jpg/v1/fill/w_1905,h_500,al_c,q_85,enc_auto/bilibili-hero.jpg" alt="Bilibili">
+<main class="body">
+<p>Bilibili is a natural, ecological water filter that also serves as a public space for movement and leisure. It is currently on display at the Hemp Museum Berlin.</p>
+<h2>Function</h2>
+<p>Bilibili filters water through absorption, using two types of bioremediators:</p>
+<ul><li>Natural fibers (hemp/kenaf)</li><li>Floating wetlands, which remove oil and toxins through their roots</li></ul>
+<p>These bioremediators are later collected by a service system and processed in one of two ways:</p>
+<ol><li>Pyrolysis plant: converting the waste into biofuels.</li><li>Composting: decomposing into soil with the help of specialized mushrooms that break down oils, toxins, and even plastics.</li></ol>
+<h2>Purpose</h2>
+<p>Designed for both saltwater and freshwater, Bilibili’s hexagonal, modular structure allows for customization and expansion. The choice of add-ons and the installation location decide how the public can interact with it, giving flexibility in function and engagement.</p>
+<div class="grid"><img src="https://static.wixstatic.com/media/7d88fb_839441a59d4c412aab0255da113ecdcf~mv2.jpg/v1/fill/w_1446,h_1084,al_c,q_85,enc_auto/bilibili-1.jpg" alt="Bilibili model" loading="lazy" decoding="async" class="zoom"><img src="https://static.wixstatic.com/media/7d88fb_6b5773aecb644b4992dd3b53b1253b46~mv2.jpg/v1/fill/w_1446,h_1084,al_c,q_85,enc_auto/bilibili-2.jpg" alt="Bilibili model detail" loading="lazy" decoding="async" class="zoom"><img src="https://static.wixstatic.com/media/7d88fb_69a5ff6004bf4a759cae96e8373f310f~mv2.jpg/v1/crop/x_2340,y_1799,w_1927,h_1401/fill/w_1446,h_1051,al_c,q_85,enc_auto/bilibili-3.jpg" alt="Bilibili platform close-up" loading="lazy" decoding="async" class="zoom"><img src="https://static.wixstatic.com/media/7d88fb_cdcf941cfaaf4807be7a6cc2c2a95bee~mv2.jpg/v1/fill/w_1446,h_1080,al_c,q_85,enc_auto/bilibili-4.jpg" alt="Bilibili rendering" loading="lazy" decoding="async" class="zoom"></div>
+<h2>Prototyping process</h2>
+<figure><img src="https://static.wixstatic.com/media/7d88fb_12cb5c96ad394acc8ca12672eb968a8e~mv2.jpg/v1/crop/x_95,y_158,w_2791,h_884/fill/w_1522,h_482,al_c,q_85,enc_auto/bilibili-prototyping.jpg" alt="Prototyping process" loading="lazy" decoding="async" class="zoom"></figure>
+<h2>Form exploration</h2>
+<figure><img src="https://static.wixstatic.com/media/7d88fb_0ed244db64a546a5a3311b926c9ea8a3~mv2.jpg/v1/crop/x_109,y_0,w_2850,h_893/fill/w_1520,h_476,al_c,q_85,enc_auto/bilibili-forms.jpg" alt="Form exploration" loading="lazy" decoding="async" class="zoom"></figure>
+<h2>Dimensions research</h2>
+<figure><img src="https://static.wixstatic.com/media/7d88fb_ed3a3227b2c0475a818cb077a16f807b~mv2.jpg/v1/crop/x_0,y_92,w_3000,h_1816/fill/w_1520,h_920,al_c,q_85,enc_auto/bilibili-dimensions.jpg" alt="Dimensions research" loading="lazy" decoding="async" class="zoom"></figure>
+<figure><img src="https://static.wixstatic.com/media/7d88fb_d892612707934c8e9ec476d276578edd~mv2.jpg/v1/fill/w_1800,h_1273,al_c,q_85,enc_auto/bilibili-final.jpg" alt="Bilibili platforms on the water" loading="lazy" decoding="async" class="zoom"></figure>
+</main>
+<nav class="pager" aria-label="More projects"><a class="prev" href="fungi.html"><span>&larr; Previous</span><strong>Fungi</strong></a><a class="next" href="more.html"><span>Next &rarr;</span><strong>More</strong></a></nav>
+<footer><p>&copy; 2026 Iara Forstreuter</p></footer>
+<script>
+(function(){
+  var box = document.createElement('div');
+  box.className = 'lightbox';
+  box.innerHTML = '<img alt="">';
+  document.body.appendChild(box);
+  var big = box.querySelector('img');
+  document.querySelectorAll('img.zoom').forEach(function(img){
+    img.addEventListener('click', function(){
+      big.src = img.currentSrc || img.src; big.alt = img.alt;
+      box.classList.add('open');
+    });
+  });
+  box.addEventListener('click', function(){ box.classList.remove('open'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') box.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+:root {
+  --gutter: clamp(20px, 5vw, 60px);
+  --text: 720px;
+  --media: 1000px;
+  --bg: #2a2a2a;
+  --ink: #fff;
+  --muted: #bbb;
+  --accent: #FFD700;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+
+.nav-sticky {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--accent);
+  padding: 1rem var(--gutter);
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+.nav-brand {
+  font-size: 14px; font-weight: 600; color: #000;
+  letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { text-decoration: none; color: #000; font-size: 14px; font-weight: 500; letter-spacing: 1px; }
+.nav-links a:hover { opacity: 0.7; }
+
+.project-hero {
+  padding: clamp(48px, 8vw, 100px) var(--gutter) clamp(32px, 5vw, 56px);
+  max-width: calc(var(--text) + 2 * var(--gutter));
+  margin: 0 auto;
+}
+.back {
+  display: inline-block; margin-bottom: 2rem;
+  font-size: 14px; color: var(--muted); text-decoration: none; letter-spacing: 0.5px;
+}
+.back:hover { color: var(--accent); }
+.pill {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+}
+.project-hero h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+}
+.meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 1.5rem; list-style: none; }
+.meta li { font-size: 13px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+.hero-image {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.body { padding: 0 var(--gutter) clamp(64px, 10vw, 120px); }
+.body > * { max-width: var(--text); margin-left: auto; margin-right: auto; }
+.body h2 {
+  font-size: clamp(22px, 3vw, 28px);
+  font-weight: 600;
+  margin-top: clamp(48px, 7vw, 80px);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+.body h2::before {
+  content: ''; display: block; width: 40px; height: 3px;
+  background: var(--accent); margin-bottom: 1rem;
+}
+.body p { color: #ddd; font-size: 17px; margin-bottom: 1.25rem; }
+.body ul, .body ol { color: #ddd; font-size: 17px; margin: 0 auto 1.5rem; padding-left: 1.25rem; }
+.body li { margin-bottom: 0.6rem; padding-left: 0.25rem; }
+.body li::marker { color: var(--accent); }
+.body strong { color: var(--ink); font-weight: 600; }
+.body blockquote {
+  border-left: 3px solid var(--accent);
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  margin: 2rem auto;
+  font-size: clamp(19px, 2.4vw, 23px);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.body figure, .body .grid { max-width: var(--media); margin: clamp(28px, 4vw, 44px) auto; }
+.body figure.narrow { max-width: 520px; }
+.body figure img, .grid img { width: 100%; border-radius: 8px; background: #333; }
+.body figcaption { font-size: 13px; color: #999; margin-top: 0.6rem; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(12px, 2vw, 24px); align-items: start; }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.zoom { cursor: zoom-in; display: block; }
+.extlink { display: block; position: relative; }
+.extlink::after {
+  content: 'Open \2197';
+  position: absolute; right: 12px; bottom: 12px;
+  background: var(--accent); color: #000;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+  padding: 4px 10px; border-radius: 12px;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0 !important; margin: 1.5rem auto !important; }
+.tags li {
+  border: 1px solid rgba(255,255,255,0.4); border-radius: 12px;
+  padding: 4px 12px; font-size: 13px; color: var(--ink); margin: 0;
+}
+.tags li::marker { content: none; }
+
+.cta {
+  display: inline-block;
+  margin: 0.5rem 0 1.5rem;
+  padding: 12px 28px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+.cta:hover { background: var(--accent); color: #000; }
+.cta-wrap { max-width: var(--text); margin: 0 auto; }
+
+.pager {
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding: clamp(32px, 5vw, 56px) var(--gutter);
+  display: flex; justify-content: space-between; gap: 1.5rem;
+  max-width: calc(var(--media) + 2 * var(--gutter)); margin: 0 auto;
+}
+.pager a { text-decoration: none; display: flex; flex-direction: column; gap: 0.25rem; max-width: 48%; }
+.pager a.next { text-align: right; margin-left: auto; }
+.pager span { font-size: 12px; color: #999; letter-spacing: 1.5px; text-transform: uppercase; }
+.pager strong { font-size: clamp(17px, 2.4vw, 22px); font-weight: 600; }
+.pager a:hover strong { color: var(--accent); }
+
+footer {
+  padding: clamp(32px, 4vw, 48px) var(--gutter);
+  text-align: center; font-size: 14px; color: #ccc;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(20,20,20,0.95);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px; cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+
+@media (max-width: 480px) {
+  .nav-brand { letter-spacing: 1px; font-size: 13px; white-space: nowrap; }
+  .nav-links { gap: 1rem; }
+  .nav-links a { font-size: 13px; letter-spacing: 0.5px; }
+}
+@media (max-width: 640px) {
+  .grid, .grid.three { grid-template-columns: minmax(0, 1fr); }
+  .grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .body p, .body ul, .body ol { font-size: 16px; }
+  .hero-image { max-height: 280px; }
+}

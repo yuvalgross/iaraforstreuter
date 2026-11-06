@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leibniz Packaging | Iara Forstreuter</title>
+<meta name="description" content="Take &amp; Share: packaging design with Leibniz and HTW Berlin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+<nav class="nav-sticky">
+  <a class="nav-brand" href="../index.html">Iara Forstreuter</a>
+  <ul class="nav-links">
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+<header class="project-hero">
+  <a class="back" href="../index.html#work">&larr; All projects</a>
+  <div><span class="pill">Leibniz Packaging</span></div>
+  <h1>Take &amp; Share: packaging design with Leibniz and HTW Berlin</h1>
+  <ul class="meta"><li>Packaging Design</li><li>Universal Design</li><li>Industrial Design</li></ul>
+</header>
+<img class="hero-image" src="https://static.wixstatic.com/media/7d88fb_fff550ccb87d4062b77b4425abd46c9e~mv2.jpg/v1/fill/w_1905,h_372,al_c,q_85,enc_auto/leibniz-hero.jpg" alt="Leibniz Packaging">
+<main class="body">
+<p>This packaging was developed in collaboration with Leibniz and HTW, inspired by the theme “On the Go.” The design, which unfolds into a display-like form, was created using universal design thinking. Through user journey mapping we analyzed real-life interactions with the product and found the pain points in the existing packaging:</p>
+<ul><li><strong>Fragility:</strong> the packaging failed to protect the biscuits, which often broke.</li><li><strong>Freshness:</strong> once opened, the biscuits quickly lost their crispness unless moved to another container.</li><li><strong>Portability:</strong> the size and quantity made it cumbersome to carry.</li><li><strong>Reusability:</strong> the opening tore easily, making resealing difficult.</li><li><strong>Spillage:</strong> once opened, biscuits could spill inside a bag.</li><li><strong>Brand recognition:</strong> users strongly associated the brand colors with childhood memories.</li><li><strong>Social sharing:</strong> in groups the biscuits were commonly shared, as most people in Germany grew up with Leibniz.</li></ul>
+<p>By addressing these insights, the Take &amp; Share packaging improves convenience, durability, and usability while keeping the brand’s nostalgic appeal.</p>
+<figure><img src="https://static.wixstatic.com/media/7d88fb_a4981b0198184d6894e4d56217f71777~mv2.jpg/v1/fill/w_1816,h_1000,al_c,q_85,enc_auto/leibniz-process.jpg" alt="Universal design thinking, user journeys and user scenarios" loading="lazy" decoding="async" class="zoom"></figure>
+<h2>Implementation</h2>
+<p>My main goal was to address food waste and transportability while minimizing material. The packaging reduces plastic to the bare minimum while still meeting food industry regulations.</p>
+<p>Portion-controlled packs keep biscuits from going soft and cut waste, and the resource-efficient folding system works with existing production machinery. Rigid cardboard protects the product; a resealable sticker opening makes it easy to carry and lets the lid flip back into an attractive display for sharing. The original visual identity and colors were kept, respecting users’ emotional connection to Leibniz.</p>
+<div class="grid"><img src="https://static.wixstatic.com/media/7d88fb_61dcc16a2c2046d1933a8a969b4f7ccc~mv2.jpg/v1/fill/w_1446,h_976,al_c,q_85,enc_auto/leibniz-1.jpg" alt="Take &amp; Share packaging" loading="lazy" decoding="async" class="zoom"><img src="https://static.wixstatic.com/media/7d88fb_ba984167b5a74398a7da929dc929b689~mv2.png/v1/fill/w_1446,h_976,al_c,q_85,enc_auto/leibniz-2.png" alt="Take &amp; Share packaging opened as a display" loading="lazy" decoding="async" class="zoom"></div>
+</main>
+<nav class="pager" aria-label="More projects"><a class="prev" href="food-and-culture.html"><span>&larr; Previous</span><strong>Food &amp; Culture</strong></a><a class="next" href="fungi.html"><span>Next &rarr;</span><strong>Fungi</strong></a></nav>
+<footer><p>&copy; 2026 Iara Forstreuter</p></footer>
+<script>
+(function(){
+  var box = document.createElement('div');
+  box.className = 'lightbox';
+  box.innerHTML = '<img alt="">';
+  document.body.appendChild(box);
+  var big = box.querySelector('img');
+  document.querySelectorAll('img.zoom').forEach(function(img){
+    img.addEventListener('click', function(){
+      big.src = img.currentSrc || img.src; big.alt = img.alt;
+      box.classList.add('open');
+    });
+  });
+  box.addEventListener('click', function(){ box.classList.remove('open'); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') box.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
