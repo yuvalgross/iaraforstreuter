@@ -654,6 +654,29 @@
     .pm-head h2 { font-size: 14px; }
   }
 
+  /* Card hover: the illustration lifts, glows and sways gently */
+  .project-illustration-wrapper svg {
+    transition: transform 0.6s cubic-bezier(.2,.7,.2,1), filter 0.6s ease;
+    transform-origin: 50% 55%;
+    will-change: transform;
+  }
+  .project-with-illustration:hover .project-illustration-wrapper svg,
+  .project-with-illustration:focus-within .project-illustration-wrapper svg {
+    transform: translateY(-8px) scale(1.06);
+    filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.35));
+    animation: card-sway 4s ease-in-out 0.6s infinite;
+  }
+  @keyframes card-sway {
+    0%, 100% { transform: translateY(-8px) scale(1.06) rotate(0deg); }
+    25%      { transform: translateY(-12px) scale(1.07) rotate(-1.5deg); }
+    75%      { transform: translateY(-5px) scale(1.06) rotate(1.5deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .project-illustration-wrapper svg { transition: filter 0.4s ease; }
+    .project-with-illustration:hover .project-illustration-wrapper svg,
+    .project-with-illustration:focus-within .project-illustration-wrapper svg { transform: none; animation: none; }
+  }
+
   /* Tablet: keep two columns, tighter */
   @media (max-width: 900px) {
     .portfolio-grid {
