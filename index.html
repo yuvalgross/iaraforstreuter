@@ -1357,12 +1357,12 @@ const allColors = ['#FF4444', '#FF6666', '#0056B3', '#87CEEB', '#FFD700', '#FF8C
 // Nodes sit on rings and are linked around each ring by arcs that follow
 // the circle; long sweeping curves connect the outer loops to the core.
 const LOOPS = [
-  { name: 'core',           cx: 700,  cy: 295, R: 118, n: 6, r: 21, start: -80, core: true, sx: 1.12, sy: 0.92, tilt: 12 },
-  { name: 'systems',        cx: 250,  cy: 225, R: 82,  n: 5, r: 13, start: -40, sx: 1.25, sy: 0.8,  tilt: -25 },
-  { name: 'futures',        cx: 470,  cy: 100, R: 62,  n: 4, r: 12, start: -20, sx: 1.3,  sy: 0.75, tilt: 15 },
+  { name: 'core',           cx: 702,  cy: 302, R: 118, n: 6, r: 21, start: -80, core: true, sx: 1.12, sy: 0.92, tilt: 12 },
+  { name: 'systems',        cx: 235,  cy: 240, R: 82,  n: 5, r: 13, start: -40, sx: 1.25, sy: 0.8,  tilt: -25 },
+  { name: 'futures',        cx: 488,  cy: 108, R: 62,  n: 4, r: 12, start: -20, sx: 1.3,  sy: 0.75, tilt: 15 },
   { name: 'sustainability', cx: 985,  cy: 120, R: 70,  n: 5, r: 12, start: 0,   sx: 1.2,  sy: 0.85, tilt: -10 },
   { name: 'design',         cx: 1230, cy: 285, R: 86,  n: 5, r: 13, start: 25,  sx: 0.85, sy: 1.2,  tilt: 20 },
-  { name: 'participation',  cx: 990,  cy: 450, R: 78,  n: 5, r: 12, start: 50,  sx: 1.3,  sy: 0.8,  tilt: 8 },
+  { name: 'participation',  cx: 1025, cy: 455, R: 78,  n: 5, r: 12, start: 50,  sx: 1.3,  sy: 0.8,  tilt: 8 },
   { name: 'learning',       cx: 380,  cy: 435, R: 74,  n: 4, r: 12, start: 5,   sx: 1.2,  sy: 0.85, tilt: -18 },
 ];
 // seeded random: the map looks hand-placed but is the same on every visit
@@ -1384,7 +1384,7 @@ LOOPS.forEach((L, li) => {
 });
 // loose single elements scattered between the loops
 const LOOSE = { name: 'loose', loose: true, members: [], n: 0, phase: 0.4, cx: 0, cy: 0 };
-[[585, 470], [835, 545], [1100, 215], [600, 125], [140, 375], [1345, 445], [835, 75]].forEach(([x, y]) => {
+[[585, 470], [835, 545], [1100, 215], [700, 70], [140, 375], [1320, 450], [850, 55]].forEach(([x, y]) => {
   LOOSE.members.push(nodes.length);
   nodes.push({ x, y, r: 8 + rand() * 5, loop: LOOPS.length, loose: true });
 });
@@ -1392,9 +1392,9 @@ LOOSE.n = LOOSE.members.length;
 LOOPS.push(LOOSE);
 nodes.forEach((node, i) => {
   node.color = allColors[i % allColors.length];
-  node.wobbleAmp = 3 + (i % 3);                        // tiny, in place
+  node.wobbleAmp = 6 + (i % 4) * 1.5;                  // small, in place
   node.wobblePhase = (i * 2.399) % (Math.PI * 2);
-  node.wobbleSpeed = 0.15 + (i % 5) * 0.03;
+  node.wobbleSpeed = 0.3 + (i % 5) * 0.06;
 });
 // current (animated) positions, used by nodes, edges and hover
 const cur = nodes.map(n => ({ x: n.x, y: n.y }));
@@ -1499,14 +1499,14 @@ function animateDrift() {
   // each loop breathes (scales), sways (small rotation) and drifts a little
   LOOSE.members.forEach(i => {
     const n = nodes[i], w = t * n.wobbleSpeed + n.wobblePhase;
-    cur[i].x = n.x + Math.sin(t * 0.13 + n.wobblePhase) * 12 + Math.sin(w) * n.wobbleAmp;
-    cur[i].y = n.y + Math.cos(t * 0.11 + n.wobblePhase) * 10 + Math.cos(w * 0.8) * n.wobbleAmp;
+    cur[i].x = n.x + Math.sin(t * 0.2 + n.wobblePhase) * 30 + Math.sin(w) * n.wobbleAmp;
+    cur[i].y = n.y + Math.cos(t * 0.17 + n.wobblePhase) * 22 + Math.cos(w * 0.8) * n.wobbleAmp;
   });
   LOOPS.forEach((L, li) => {
     if (L.loose) return;
-    const s = 1 + (L.core ? 0.035 : 0.06) * Math.sin(t * 0.3 + L.phase);          // ~20 s per breath
-    const rot = (L.core ? 0.02 : 0.05) * Math.sin(t * 0.11 + L.phase);            // gentle sway
-    const ox = 6 * Math.sin(t * 0.07 + L.phase), oy = 5 * Math.cos(t * 0.09 + L.phase);
+    const s = 1 + (L.core ? 0.07 : 0.12) * Math.sin(t * 0.42 + L.phase);          // ~20 s per breath
+    const rot = (L.core ? 0.06 : 0.14) * Math.sin(t * 0.17 + L.phase);            // gentle sway
+    const ox = (L.core ? 10 : 16) * Math.sin(t * 0.12 + L.phase), oy = (L.core ? 8 : 12) * Math.cos(t * 0.15 + L.phase);
     const cr = Math.cos(rot), sr = Math.sin(rot);
     L.members.forEach(i => {
       const n = nodes[i], dx = (n.x - L.cx) * s, dy = (n.y - L.cy) * s;
