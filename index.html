@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;1,400&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -709,6 +709,41 @@
     .nav-links { gap: 1rem; }
     .nav-links a { font-size: 13px; letter-spacing: 0.5px; }
   }
+
+  /* Typography after Co-Star: a serif for headings (sentence case), a quiet
+     sans for body text, and small uppercase mono for every label and button.
+     Free stand-ins: Libre Baskerville (Romana), Inter (Akkurat), IBM Plex Mono (Akkurat Mono). */
+  :root {
+    --serif: 'Libre Baskerville', 'Times New Roman', serif;
+    --sans: 'Inter', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', 'Andale Mono', monospace;
+  }
+  body { font-family: var(--sans); }
+  .hero h1, .section-title, .contact h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .hero h1 { font-size: clamp(34px, 5vw, 54px); }
+  .section-title { font-size: clamp(30px, 4.2vw, 44px); }
+  .contact h2 { font-size: clamp(32px, 5vw, 48px); }
+  .hero p, .about-text p, .contact p, .project-content p {
+    font-family: var(--sans);
+    letter-spacing: 0;
+  }
+  .nav-brand, .nav-links a, .project-category, .tag, .contact-link,
+  .about-group h3, .about-strip .chips li, .contact-meta, .pm-head h2, .pm-head a, footer p {
+    font-family: var(--mono);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .nav-brand, .nav-links a { font-size: 12px; }
+  .project-category, .tag, .about-strip .chips li, .pm-head a, footer p { font-size: 11px; }
+  .contact-link, .about-group h3, .pm-head h2 { font-size: 12px; }
+  .contact-meta, .contact-meta a { font-size: 12px !important; }
 </style>
 </head>
 <body>

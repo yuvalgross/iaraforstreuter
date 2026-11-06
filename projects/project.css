@@ -188,3 +188,28 @@ footer {
   .body p, .body ul, .body ol { font-size: 16px; }
   .hero-image { max-height: 280px; }
 }
+
+/* Typography after Co-Star: a serif for headings (sentence case), a quiet
+   sans for body text, and small uppercase mono for every label and button.
+   Free stand-ins: Libre Baskerville (Romana), Inter (Akkurat), IBM Plex Mono (Akkurat Mono). */
+:root {
+  --serif: 'Libre Baskerville', 'Times New Roman', serif;
+  --sans: 'Inter', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', 'Andale Mono', monospace;
+}
+body { font-family: var(--sans); }
+.project-hero h1, .body h2, .pager strong {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.project-hero h1 { line-height: 1.2; }
+.body blockquote { font-family: var(--serif); font-style: italic; }
+.nav-brand, .nav-links a, .back, .pill, .meta li, .keywords li, .tags li, .cta, .pager span, footer, .extlink::after {
+  font-family: var(--mono);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.nav-brand, .nav-links a, .back, .pill, .cta { font-size: 12px; }
+.meta li, .keywords li, .tags li, .pager span, footer, .extlink::after { font-size: 11px; }
