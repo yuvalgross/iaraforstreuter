@@ -2,6 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+  /* Always open on the intro: outside links, reloads and shared #work links start at the top.
+     Internal "Back to work" links from project pages still jump to their section. */
+  (function () {
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+    var fromSite = false;
+    try { fromSite = !!document.referrer && new URL(document.referrer).origin === location.origin && !/\/(index\.html)?$/.test(new URL(document.referrer).pathname); } catch (e) {}
+    if (location.hash && !fromSite) {
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+    }
+    if (!location.hash) {
+      window.addEventListener('load', function () { window.scrollTo(0, 0); });
+    }
+  })();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Iara Forstreuter | System Designer &amp; Workshop Facilitator in Berlin</title>
 <meta name="description" content="Iara Forstreuter is a system designer and workshop facilitator based in Berlin. Portfolio of systems design, participatory design, futures, sustainability, UX/UI and industrial design projects.">
@@ -1825,6 +1840,17 @@ if (workSvg) {
     });
   });
 })();
+</script>
+<script>
+  /* Menu links scroll to their section without putting #work / #about / #contact in the address */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var id = a.getAttribute('href').slice(1); var el = id && document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 </script>
 </body>
 </html>
