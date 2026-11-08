@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://iaraforstreuter.vercel.app/sitemap.xml
