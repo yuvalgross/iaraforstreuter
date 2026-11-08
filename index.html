@@ -807,6 +807,12 @@
   #hero-svg { order: 0; margin-top: 0; margin-bottom: -4vw; }
   .hero .wrap { order: 1; }
   .hero { padding-top: clamp(24px, 4vw, 56px); padding-bottom: clamp(90px, 10vw, 130px); }
+
+  /* Role line under the name: names Iara's professions in visible text (search engines weigh this) */
+  .hero .wrap p.hero-role {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+    text-transform: uppercase; margin: 0.4rem 0 0; opacity: 0.85;
+  }
 </style>
 </head>
 <body>
@@ -823,6 +829,7 @@
 <section class="hero" id="hero-section">
   <div class="wrap">
     <h1>Iara Forstreuter</h1>
+    <p class="hero-role">System designer &amp; workshop facilitator · Berlin</p>
     <div class="divider"></div>
     <p>An interdisciplinary designer working at the intersection of systems, futures, participation, and sustainability, exploring new ways of seeing, making, learning, and connecting.</p>
   </div>
